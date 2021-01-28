@@ -1,0 +1,32 @@
+version: 2.1
+jobs:
+  build:
+    working_directory: ~/tmp
+    parallelism: 1
+    docker:
+      - image: circleci/node:14.15
+    resource_class: large
+    steps:
+      - checkout
+      - run:
+          name: Install verifier
+          command: |
+            cd ~/tmp/
+            git clone --single-branch --branch main https://github.com/rsksmart/rsk-verify-tools.git
+            cd rsk-verify-tools
+            npm install
+
+      - run:
+          name: "cache solc"
+          command: |
+            cd ~/tmp/rsk-verify-tools
+            npm run cache
+
+      - run:
+          name: Test contracts
+          no_output_timeout: 30m
+          environment:
+            NODE_OPTIONS: --max_old_space_size=4096
+          command: |
+             cd ~/tmp/rsk-verify-tools
+             npm run verify -- ~/tmp/contracts
