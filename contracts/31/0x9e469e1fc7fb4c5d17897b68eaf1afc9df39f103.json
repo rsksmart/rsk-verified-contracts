@@ -1,0 +1,30 @@
+{
+  "address": "0x9e469e1fc7fb4c5d17897b68eaf1afc9df39f103",
+  "net": {
+    "id": "31",
+    "name": "RSK Testnet"
+  },
+  "name": "Multicall",
+  "settings": {
+    "optimizer": {
+      "enabled": true,
+      "runs": 200
+    }
+  },
+  "version": "0.5.7+commit.6da8b019",
+  "source": "pragma solidity >=0.5.0;\n\npragma experimental ABIEncoderV2;\n\n\n\n/// @title Multicall - Aggregate results from multiple read-only function calls\n\n/// @author Michael Elliot <mike@makerdao.com>\n\n/// @author Joshua Levine <joshua@makerdao.com>\n\n/// @author Nick Johnson <arachnid@notdot.net>\n\n\n\ncontract Multicall {\n\n    struct Call {\n\n        address target;\n\n        bytes callData;\n\n    }\n\n    function aggregate(Call[] memory calls) public returns (uint256 blockNumber, bytes[] memory returnData) {\n\n        blockNumber = block.number;\n\n        returnData = new bytes[](calls.length);\n\n        for(uint256 i = 0; i < calls.length; i++) {\n\n            (bool success, bytes memory ret) = calls[i].target.call(calls[i].callData);\n\n            require(success);\n\n            returnData[i] = ret;\n\n        }\n\n    }\n\n    // Helper functions\n\n    function getEthBalance(address addr) public view returns (uint256 balance) {\n\n        balance = addr.balance;\n\n    }\n\n    function getBlockHash(uint256 blockNumber) public view returns (bytes32 blockHash) {\n\n        blockHash = blockhash(blockNumber);\n\n    }\n\n    function getLastBlockHash() public view returns (bytes32 blockHash) {\n\n        blockHash = blockhash(block.number - 1);\n\n    }\n\n    function getCurrentBlockTimestamp() public view returns (uint256 timestamp) {\n\n        timestamp = block.timestamp;\n\n    }\n\n    function getCurrentBlockDifficulty() public view returns (uint256 difficulty) {\n\n        difficulty = block.difficulty;\n\n    }\n\n    function getCurrentBlockGasLimit() public view returns (uint256 gaslimit) {\n\n        gaslimit = block.gaslimit;\n\n    }\n\n    function getCurrentBlockCoinbase() public view returns (address coinbase) {\n\n        coinbase = block.coinbase;\n\n    }\n\n}\n",
+  "imports": [
+    {
+      "name": "Multicall.sol",
+      "contents": "pragma solidity >=0.5.0;\n\npragma experimental ABIEncoderV2;\n\n\n\n/// @title Multicall - Aggregate results from multiple read-only function calls\n\n/// @author Michael Elliot <mike@makerdao.com>\n\n/// @author Joshua Levine <joshua@makerdao.com>\n\n/// @author Nick Johnson <arachnid@notdot.net>\n\n\n\ncontract Multicall {\n\n    struct Call {\n\n        address target;\n\n        bytes callData;\n\n    }\n\n    function aggregate(Call[] memory calls) public returns (uint256 blockNumber, bytes[] memory returnData) {\n\n        blockNumber = block.number;\n\n        returnData = new bytes[](calls.length);\n\n        for(uint256 i = 0; i < calls.length; i++) {\n\n            (bool success, bytes memory ret) = calls[i].target.call(calls[i].callData);\n\n            require(success);\n\n            returnData[i] = ret;\n\n        }\n\n    }\n\n    // Helper functions\n\n    function getEthBalance(address addr) public view returns (uint256 balance) {\n\n        balance = addr.balance;\n\n    }\n\n    function getBlockHash(uint256 blockNumber) public view returns (bytes32 blockHash) {\n\n        blockHash = blockhash(blockNumber);\n\n    }\n\n    function getLastBlockHash() public view returns (bytes32 blockHash) {\n\n        blockHash = blockhash(block.number - 1);\n\n    }\n\n    function getCurrentBlockTimestamp() public view returns (uint256 timestamp) {\n\n        timestamp = block.timestamp;\n\n    }\n\n    function getCurrentBlockDifficulty() public view returns (uint256 difficulty) {\n\n        difficulty = block.difficulty;\n\n    }\n\n    function getCurrentBlockGasLimit() public view returns (uint256 gaslimit) {\n\n        gaslimit = block.gaslimit;\n\n    }\n\n    function getCurrentBlockCoinbase() public view returns (address coinbase) {\n\n        coinbase = block.coinbase;\n\n    }\n\n}\n",
+      "file": "Multicall.sol"
+    }
+  ],
+  "libraries": {},
+  "creationData": {
+    "blockHash": "0xbb9d5321e0ce0da526cf7ef19bbde26a8bd7715d0a33820cb7ede515abc48365",
+    "blockNumber": 950784,
+    "transactionHash": "0x02d5bce56e82f220a82ab94f7ebfd728346acec9a1b674a4507bdf4c0bb8282c",
+    "timestamp": 1592742805
+  }
+}

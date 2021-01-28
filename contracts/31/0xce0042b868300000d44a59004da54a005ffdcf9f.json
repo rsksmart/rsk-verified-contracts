@@ -1,0 +1,30 @@
+{
+  "address": "0xce0042b868300000d44a59004da54a005ffdcf9f",
+  "net": {
+    "id": "31",
+    "name": "RSK Testnet"
+  },
+  "name": "SingletonFactory",
+  "settings": {
+    "optimizer": {
+      "enabled": true,
+      "runs": 200
+    }
+  },
+  "version": "0.6.2+commit.bacdbe57",
+  "source": "pragma solidity 0.6.2;\n\n\n/**\n * @title Singleton Factory (EIP-2470)\n * @notice Exposes CREATE2 (EIP-1014) to deploy bytecode on deterministic addresses based on initialization code and salt.\n * @author Ricardo Guilherme Schmidt (Status Research & Development GmbH)\n */\ncontract SingletonFactory {\n    /**\n     * @notice Deploys `_initCode` using `_salt` for defining the deterministic address.\n     * @param _initCode Initialization code.\n     * @param _salt Arbitrary value to modify resulting address.\n     * @return createdContract Created contract address.\n     */\n    function deploy(bytes memory _initCode, bytes32 _salt)\n        public\n        returns (address payable createdContract)\n    {\n        assembly {\n            createdContract := create2(0, add(_initCode, 0x20), mload(_initCode), _salt)\n        }\n    }\n}\n// IV is a value changed to generate the vanity address.\n// IV: 6583047",
+  "imports": [
+    {
+      "name": "SingletonFactory.sol",
+      "contents": "pragma solidity 0.6.2;\n\n\n/**\n * @title Singleton Factory (EIP-2470)\n * @notice Exposes CREATE2 (EIP-1014) to deploy bytecode on deterministic addresses based on initialization code and salt.\n * @author Ricardo Guilherme Schmidt (Status Research & Development GmbH)\n */\ncontract SingletonFactory {\n    /**\n     * @notice Deploys `_initCode` using `_salt` for defining the deterministic address.\n     * @param _initCode Initialization code.\n     * @param _salt Arbitrary value to modify resulting address.\n     * @return createdContract Created contract address.\n     */\n    function deploy(bytes memory _initCode, bytes32 _salt)\n        public\n        returns (address payable createdContract)\n    {\n        assembly {\n            createdContract := create2(0, add(_initCode, 0x20), mload(_initCode), _salt)\n        }\n    }\n}\n// IV is a value changed to generate the vanity address.\n// IV: 6583047",
+      "file": "SingletonFactory.sol"
+    }
+  ],
+  "libraries": {},
+  "creationData": {
+    "blockHash": "0x70babca5a48cccd471a8b93c29a042324e8f2b3983eb99abc65c3f5dbcabca0b",
+    "blockNumber": 1270900,
+    "transactionHash": "0x803351deb6d745e91545a6a3e1c0ea3e9a6a02a1a4193b70edfcd2f40f71a01c",
+    "timestamp": 1603150752
+  }
+}

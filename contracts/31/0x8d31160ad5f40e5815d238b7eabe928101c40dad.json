@@ -1,0 +1,44 @@
+{
+  "address": "0x8d31160ad5f40e5815d238b7eabe928101c40dad",
+  "net": {
+    "id": "31",
+    "name": "RSK Testnet"
+  },
+  "name": "ReferenceConsumer",
+  "settings": {
+    "optimizer": {
+      "enabled": false,
+      "runs": 200
+    },
+    "outputSelection": {
+      "*": {
+        "*": [
+          "abi",
+          "metadata",
+          "evm.bytecode",
+          "evm.deployedBytecode",
+          "evm.methodIdentifiers"
+        ]
+      }
+    }
+  },
+  "version": "0.4.26+commit.4563c3fc",
+  "source": "pragma solidity ^0.4.24;\r\n\r\ninterface AggregatorInterface {\r\n  function latestAnswer() external view returns (int256);\r\n  function latestTimestamp() external view returns (uint256);\r\n  function latestRound() external view returns (uint256);\r\n  function getAnswer(uint256 roundId) external view returns (int256);\r\n  function getTimestamp(uint256 roundId) external view returns (uint256);\r\n\r\n  event AnswerUpdated(int256 indexed current, uint256 indexed roundId, uint256 timestamp);\r\n  event NewRound(uint256 indexed roundId, address indexed startedBy, uint256 startedAt);\r\n}\r\n\r\ncontract ReferenceConsumer {\r\n  AggregatorInterface internal ref;\r\n  \r\n  int256 public RIFUSD_STORED;\r\n\r\n  constructor(address _aggregator) public {\r\n    ref = AggregatorInterface(_aggregator);\r\n  }\r\n  \r\n  /**\r\n   * @notice Stores the latest answer in a public variable\r\n   */\r\n  function updateAnchor() public {\r\n    RIFUSD_STORED = ref.latestAnswer();\r\n  }\r\n  \r\n  /**\r\n   * @notice Returns the latest answer from the _aggregator\r\n   * @dev The answer is multiplied by a constant, depending on the aggregator\r\n   * @dev For example, the Ropsten ETH/USD feed is multiplied by 100,000,000\r\n   * @dev See https://docs.chain.link/docs/using-chainlink-reference-contracts#use-the-reference-data\r\n   */\r\n  function getLatestAnswer() public view returns (int256) {\r\n    return ref.latestAnswer();\r\n  }\r\n\r\n  /**\r\n   * @notice Returns the latest update timestamp from the _aggregator\r\n   */\r\n  function getLatestTimestamp() public view returns (uint256) {\r\n    return ref.latestTimestamp();\r\n  }\r\n\r\n  /**\r\n   * @notice Returns historical data from previous update rounds\r\n   */\r\n  function getPreviousAnswer(uint256 _back) public view returns (int256) {\r\n    uint256 latest = ref.latestRound();\r\n    require(_back <= latest, \"Not enough history\");\r\n    return ref.getAnswer(latest - _back);\r\n  }\r\n\r\n  /**\r\n   * @notice Returns historical data from previous update rounds\r\n   */\r\n  function getPreviousTimestamp(uint256 _back) public view returns (uint256) {\r\n    uint256 latest = ref.latestRound();\r\n    require(_back <= latest, \"Not enough history\");\r\n    return ref.getTimestamp(latest - _back);\r\n  }\r\n}\r\n",
+  "imports": [
+    {
+      "name": "ReferenceConsumer.sol",
+      "contents": "pragma solidity ^0.4.24;\r\n\r\ninterface AggregatorInterface {\r\n  function latestAnswer() external view returns (int256);\r\n  function latestTimestamp() external view returns (uint256);\r\n  function latestRound() external view returns (uint256);\r\n  function getAnswer(uint256 roundId) external view returns (int256);\r\n  function getTimestamp(uint256 roundId) external view returns (uint256);\r\n\r\n  event AnswerUpdated(int256 indexed current, uint256 indexed roundId, uint256 timestamp);\r\n  event NewRound(uint256 indexed roundId, address indexed startedBy, uint256 startedAt);\r\n}\r\n\r\ncontract ReferenceConsumer {\r\n  AggregatorInterface internal ref;\r\n  \r\n  int256 public RIFUSD_STORED;\r\n\r\n  constructor(address _aggregator) public {\r\n    ref = AggregatorInterface(_aggregator);\r\n  }\r\n  \r\n  /**\r\n   * @notice Stores the latest answer in a public variable\r\n   */\r\n  function updateAnchor() public {\r\n    RIFUSD_STORED = ref.latestAnswer();\r\n  }\r\n  \r\n  /**\r\n   * @notice Returns the latest answer from the _aggregator\r\n   * @dev The answer is multiplied by a constant, depending on the aggregator\r\n   * @dev For example, the Ropsten ETH/USD feed is multiplied by 100,000,000\r\n   * @dev See https://docs.chain.link/docs/using-chainlink-reference-contracts#use-the-reference-data\r\n   */\r\n  function getLatestAnswer() public view returns (int256) {\r\n    return ref.latestAnswer();\r\n  }\r\n\r\n  /**\r\n   * @notice Returns the latest update timestamp from the _aggregator\r\n   */\r\n  function getLatestTimestamp() public view returns (uint256) {\r\n    return ref.latestTimestamp();\r\n  }\r\n\r\n  /**\r\n   * @notice Returns historical data from previous update rounds\r\n   */\r\n  function getPreviousAnswer(uint256 _back) public view returns (int256) {\r\n    uint256 latest = ref.latestRound();\r\n    require(_back <= latest, \"Not enough history\");\r\n    return ref.getAnswer(latest - _back);\r\n  }\r\n\r\n  /**\r\n   * @notice Returns historical data from previous update rounds\r\n   */\r\n  function getPreviousTimestamp(uint256 _back) public view returns (uint256) {\r\n    uint256 latest = ref.latestRound();\r\n    require(_back <= latest, \"Not enough history\");\r\n    return ref.getTimestamp(latest - _back);\r\n  }\r\n}\r\n",
+      "file": "ReferenceConsumer.sol"
+    }
+  ],
+  "libraries": {},
+  "creationData": {
+    "blockHash": "0x7c9958cd14e7c15594e8970d234ca7df144ec273c56596fd623e4b421b8efc38",
+    "blockNumber": 995160,
+    "transactionHash": "0x3194b1aa345d45123b860bcbcb576967075db34936acc87c2893fcf6d3796119",
+    "timestamp": 1594254082
+  },
+  "constructorArguments": [
+    "0xd793fd691df2934b412e250460bed76d807f05eb"
+  ]
+}

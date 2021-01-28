@@ -1,0 +1,45 @@
+{
+  "address": "0xabe649209df57181465303e1ce40efb891d4dbfe",
+  "net": {
+    "id": "31",
+    "name": "RSK Testnet"
+  },
+  "name": "TempWallet",
+  "settings": {
+    "optimizer": {
+      "enabled": false,
+      "runs": 200
+    },
+    "outputSelection": {
+      "*": {
+        "*": [
+          "abi",
+          "metadata",
+          "evm.bytecode",
+          "evm.deployedBytecode",
+          "evm.methodIdentifiers"
+        ]
+      }
+    }
+  },
+  "version": "0.6.1+commit.e6f7d5a4",
+  "source": "pragma solidity ^0.6.0;\n\ncontract TempWallet {\n    address payable private _merchant;\n    address payable private _buyer;\n\nevent Tmp(address addr);\n    \n    constructor(address payable merchant, address payable buyer) public {\n        _merchant = merchant;\n        _buyer = buyer;\n    }\n\n\tfunction settleETH(uint256 amount) external {\n\t\t_merchant.transfer(amount);\n\t\tuint256 bal = address(this).balance;\n\t\tif (bal > 0) {\n\t\t\t_buyer.transfer(bal);\n\t\t}\n\t}\n\n    function refundETH() external {\n\t\t_buyer.transfer(address(this).balance);\n    }\n\n    function test() external {\n\temit Tmp(_merchant);\n\temit Tmp(_buyer);\n\t}\n\n    receive() external payable {}\n}\n",
+  "imports": [
+    {
+      "name": "TempWallet.sol",
+      "contents": "pragma solidity ^0.6.0;\n\ncontract TempWallet {\n    address payable private _merchant;\n    address payable private _buyer;\n\nevent Tmp(address addr);\n    \n    constructor(address payable merchant, address payable buyer) public {\n        _merchant = merchant;\n        _buyer = buyer;\n    }\n\n\tfunction settleETH(uint256 amount) external {\n\t\t_merchant.transfer(amount);\n\t\tuint256 bal = address(this).balance;\n\t\tif (bal > 0) {\n\t\t\t_buyer.transfer(bal);\n\t\t}\n\t}\n\n    function refundETH() external {\n\t\t_buyer.transfer(address(this).balance);\n    }\n\n    function test() external {\n\temit Tmp(_merchant);\n\temit Tmp(_buyer);\n\t}\n\n    receive() external payable {}\n}\n",
+      "file": "TempWallet.sol"
+    }
+  ],
+  "libraries": {},
+  "creationData": {
+    "blockHash": "0x192388dbdb92ff29466dfbbe0b95bcc2d0c7604933f1ed823fbdd0be5e5177a0",
+    "blockNumber": 853613,
+    "transactionHash": "0x095a0c1d982913a7dd3e53507d1156b3aac92ea8744acdc2606a8abba22e30dc",
+    "timestamp": 1589559437
+  },
+  "constructorArguments": [
+    "0xd15bdd17175825742a5904b21008dd3a019a060e",
+    "0xd15bdd17175825742a5904b21008dd3a019a060e"
+  ]
+}

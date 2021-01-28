@@ -1,0 +1,30 @@
+{
+  "address": "0x0fb49bb37ba4b0186a87c866a2bbd29e1ef378da",
+  "net": {
+    "id": "31",
+    "name": "RSK Testnet"
+  },
+  "name": "HelloRSK",
+  "settings": {
+    "optimizer": {
+      "enabled": false,
+      "runs": 200
+    }
+  },
+  "version": "0.5.12+commit.7709ece9",
+  "source": "pragma solidity ^0.5.0;\n\ncontract HelloRSK {\n  string private greeting = \"Set me :D\";\n\n  function getGreeting () external view returns (string memory) {\n    return greeting;\n  }\n\n  function setGreeting (string calldata newGreeting) external {\n    greeting = newGreeting;\n  }\n}\n",
+  "imports": [
+    {
+      "name": "HelloRSK.sol",
+      "contents": "pragma solidity ^0.5.0;\n\ncontract HelloRSK {\n  string private greeting = \"Set me :D\";\n\n  function getGreeting () external view returns (string memory) {\n    return greeting;\n  }\n\n  function setGreeting (string calldata newGreeting) external {\n    greeting = newGreeting;\n  }\n}\n",
+      "file": "HelloRSK.sol"
+    }
+  ],
+  "libraries": {},
+  "creationData": {
+    "blockHash": "0x814f3a04f47c9ce11f7e4ba3af18aabc616d62d504fdd19fc6eea5d4e4b7f6af",
+    "blockNumber": 394102,
+    "transactionHash": "0x71dab7f90158f11dc42f8c00ef61f0a14d5f1e8c4fa8cae3625204aeec6b570c",
+    "timestamp": 1574570216
+  }
+}

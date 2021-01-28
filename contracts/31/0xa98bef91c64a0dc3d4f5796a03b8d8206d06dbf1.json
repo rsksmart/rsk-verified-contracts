@@ -1,0 +1,30 @@
+{
+  "address": "0xa98bef91c64a0dc3d4f5796a03b8d8206d06dbf1",
+  "net": {
+    "id": "31",
+    "name": "RSK Testnet"
+  },
+  "name": "Example",
+  "settings": {
+    "optimizer": {
+      "enabled": false,
+      "runs": 200
+    }
+  },
+  "version": "0.5.8+commit.23d335f2",
+  "source": "pragma solidity 0.5.8;\n\ninterface GetPrice {\n  function getBitcoinPrice() external view returns(uint256);\n}\n\ncontract Example {\n    address get_price_addr = 0x0adb40132cB0ffcEf6ED81c26A1881e214100555;\n\n    function getPrice() external view returns(uint256){\n        return GetPrice(get_price_addr).getBitcoinPrice();\n    }\n}\n",
+  "imports": [
+    {
+      "name": "BitcoinGetPrice.sol",
+      "contents": "pragma solidity 0.5.8;\n\ninterface GetPrice {\n  function getBitcoinPrice() external view returns(uint256);\n}\n\ncontract Example {\n    address get_price_addr = 0x0adb40132cB0ffcEf6ED81c26A1881e214100555;\n\n    function getPrice() external view returns(uint256){\n        return GetPrice(get_price_addr).getBitcoinPrice();\n    }\n}\n",
+      "file": "BitcoinGetPrice.sol"
+    }
+  ],
+  "libraries": {},
+  "creationData": {
+    "blockHash": "0x3695c73cb27185713e708760a62059636b44d21b596ddaf58635e96c46c5dff6",
+    "blockNumber": 1275529,
+    "transactionHash": "0x51391215714e9b4b798c1e700438e0ba3f429cadf40735d7d4a35bd9859934f4",
+    "timestamp": 1603303732
+  }
+}

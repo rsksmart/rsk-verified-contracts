@@ -1,0 +1,30 @@
+{
+  "address": "0xd35c08f28a143c958f06bc195be41efbc551d00f",
+  "net": {
+    "id": "31",
+    "name": "RSK Testnet"
+  },
+  "name": "CryptoRandom",
+  "settings": {
+    "optimizer": {
+      "enabled": true,
+      "runs": 200
+    }
+  },
+  "version": "0.6.6+commit.6c089d02",
+  "source": "pragma solidity >=0.4.0 <0.7.0;\r\n\r\nabstract contract IBlockHeaderPrecompiledContract {\r\n    function getBitcoinHeader(int256 indexBlock) public virtual view returns (bytes memory coinbase);\r\n}\r\n\r\ncontract CryptoRandom {\r\n  IBlockHeaderPrecompiledContract BitcoinHeader =\r\n  IBlockHeaderPrecompiledContract(0x0000000000000000000000000000000001000010);\r\n  \r\n  function random () public view returns (bytes32) {\r\n    return bitcoinHeaderHash ();\r\n  }\r\n  \r\n  function bitcoinHeaderHash () public view returns (bytes32) {\r\n    bytes memory header = BitcoinHeader.getBitcoinHeader(0);\r\n    bytes32 x = sha256(header);\r\n    bytes32 y = sha256(abi.encodePacked(x));\r\n    return y;\r\n  }\r\n}",
+  "imports": [
+    {
+      "name": "CryptoRandom.sol",
+      "contents": "pragma solidity >=0.4.0 <0.7.0;\r\n\r\nabstract contract IBlockHeaderPrecompiledContract {\r\n    function getBitcoinHeader(int256 indexBlock) public virtual view returns (bytes memory coinbase);\r\n}\r\n\r\ncontract CryptoRandom {\r\n  IBlockHeaderPrecompiledContract BitcoinHeader =\r\n  IBlockHeaderPrecompiledContract(0x0000000000000000000000000000000001000010);\r\n  \r\n  function random () public view returns (bytes32) {\r\n    return bitcoinHeaderHash ();\r\n  }\r\n  \r\n  function bitcoinHeaderHash () public view returns (bytes32) {\r\n    bytes memory header = BitcoinHeader.getBitcoinHeader(0);\r\n    bytes32 x = sha256(header);\r\n    bytes32 y = sha256(abi.encodePacked(x));\r\n    return y;\r\n  }\r\n}",
+      "file": "CryptoRandom.sol"
+    }
+  ],
+  "libraries": {},
+  "creationData": {
+    "blockHash": "0x411642130254a954dc74476b38a1d6bf0c3a0e76b2d5adc4443b9a36899bc779",
+    "blockNumber": 1277832,
+    "transactionHash": "0xccbf94c3060b4066e8bb87a93cbe0aae70d77d5420a37f1fa00ddd36e2d3b1ba",
+    "timestamp": 1603379680
+  }
+}

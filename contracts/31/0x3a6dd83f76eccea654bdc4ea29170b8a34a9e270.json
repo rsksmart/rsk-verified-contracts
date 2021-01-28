@@ -1,0 +1,30 @@
+{
+  "address": "0x3a6dd83f76eccea654bdc4ea29170b8a34a9e270",
+  "net": {
+    "id": "31",
+    "name": "RSK Testnet"
+  },
+  "name": "PlantShop",
+  "settings": {
+    "optimizer": {
+      "enabled": false,
+      "runs": 200
+    }
+  },
+  "version": "0.5.6+commit.b259423e",
+  "source": "pragma solidity 0.5.6;\r\n\r\ncontract PlantShop {\r\n    address[16] public buyers;\r\n\r\n    function buy(uint plantId) public returns (uint) {\r\n        require(plantId >= 0 && plantId <= 15);\r\n        buyers[plantId] = msg.sender;\r\n        return plantId;\r\n    }\r\n\r\n    // Retrieving the buyers\r\n    function getBuyers() public view returns (address[16] memory) {\r\n        return buyers;\r\n    }\r\n}",
+  "imports": [
+    {
+      "name": "PlantShop.sol",
+      "contents": "pragma solidity 0.5.6;\r\n\r\ncontract PlantShop {\r\n    address[16] public buyers;\r\n\r\n    function buy(uint plantId) public returns (uint) {\r\n        require(plantId >= 0 && plantId <= 15);\r\n        buyers[plantId] = msg.sender;\r\n        return plantId;\r\n    }\r\n\r\n    // Retrieving the buyers\r\n    function getBuyers() public view returns (address[16] memory) {\r\n        return buyers;\r\n    }\r\n}",
+      "file": "PlantShop.sol"
+    }
+  ],
+  "libraries": {},
+  "creationData": {
+    "blockHash": "0xc88138927094824c948f0456f811034afe396a069dff20081008b5cf90fe52be",
+    "blockNumber": 1309698,
+    "transactionHash": "0xbad371b17333ac518e259a665188c85d08cb13815441c3da3fcfbe8a517995cc",
+    "timestamp": 1604262037
+  }
+}

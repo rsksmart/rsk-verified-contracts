@@ -1,0 +1,30 @@
+{
+  "address": "0x07b559310ffa871dcf0775b25b23f9f2880b3111",
+  "net": {
+    "id": "31",
+    "name": "RSK Testnet"
+  },
+  "name": "Migrations",
+  "settings": {
+    "optimizer": {
+      "enabled": false,
+      "runs": 200
+    }
+  },
+  "version": "0.4.24+commit.e67f0147",
+  "source": "// SPDX-License-Identifier: MIT\npragma solidity >=0.4.22 <0.8.0;\n\ncontract Migrations {\n  address public owner = msg.sender;\n  uint public last_completed_migration;\n\n  modifier restricted() {\n    require(\n      msg.sender == owner,\n      \"This function is restricted to the contract's owner\"\n    );\n    _;\n  }\n\n  function setCompleted(uint completed) public restricted {\n    last_completed_migration = completed;\n  }\n}\n",
+  "imports": [
+    {
+      "name": "Migrations.sol",
+      "contents": "// SPDX-License-Identifier: MIT\npragma solidity >=0.4.22 <0.8.0;\n\ncontract Migrations {\n  address public owner = msg.sender;\n  uint public last_completed_migration;\n\n  modifier restricted() {\n    require(\n      msg.sender == owner,\n      \"This function is restricted to the contract's owner\"\n    );\n    _;\n  }\n\n  function setCompleted(uint completed) public restricted {\n    last_completed_migration = completed;\n  }\n}\n",
+      "file": "Migrations.sol"
+    }
+  ],
+  "libraries": {},
+  "creationData": {
+    "blockHash": "0x1862919d632a376c657feefcb12704d203742be4d83b2304f84de9116b109387",
+    "blockNumber": 1406580,
+    "transactionHash": "0xd9a4c2903d78dfa69da4ca9203af1f4ea81acfb7cd33ccf839530a27229f581d",
+    "timestamp": 1606765898
+  }
+}

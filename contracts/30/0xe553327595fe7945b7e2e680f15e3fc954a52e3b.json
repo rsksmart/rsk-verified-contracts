@@ -1,0 +1,30 @@
+{
+  "address": "0xe553327595fe7945b7e2e680f15e3fc954a52e3b",
+  "net": {
+    "id": "30",
+    "name": "RSK Mainnet"
+  },
+  "name": "Whitelist",
+  "settings": {
+    "optimizer": {
+      "enabled": false,
+      "runs": 200
+    }
+  },
+  "version": "0.5.12+commit.7709ece9",
+  "source": "\n// File: contracts/util/AbstractWhitelist.sol\n\npragma solidity ^0.5.2;\n\ncontract AbstractWhitelist {\n\tfunction isAManager(address manager) public view returns (bool);\n\tfunction isWhitelisted (address whitelisted) public view returns (bool);\n\tfunction removeWhitelisted (address whitelisted) public;\n}\n\n// File: contracts/util/Whitelist.sol\n\npragma solidity ^0.5.2;\n\n\ncontract Whitelist is AbstractWhitelist {\n\taddress public owner;\n\n\tmapping (address => bool) public isManager;\n\tmapping (address => uint) public whitelistedUntil;\n\n\tuint public whitelistedTime;\n\n\tmodifier onlyOwner () {\n\t\trequire(msg.sender == owner);\n\t\t_;\n\t}\n\n\tmodifier onlyManagers () {\n\t\trequire(isManager[msg.sender]);\n\t\t_;\n\t}\n\n\tconstructor () public {\n\t\towner = msg.sender;\n\t\twhitelistedTime = 1 days;\n\t}\n\n\tfunction addManager (address manager) public onlyOwner() {\n\t\tisManager[manager] = true;\n\t}\n\n\tfunction removeManager (address manager) public onlyOwner() {\n\t\tisManager[manager] = false;\n\t}\n\n\tfunction addWhitelisted (address whitelisted) public onlyManagers() {\n\t\twhitelistedUntil[whitelisted] = now + whitelistedTime;\n\t}\n\n\tfunction removeWhitelisted (address whitelisted) public onlyManagers() {\n\t\twhitelistedUntil[whitelisted] = 0;\n\t}\n\n\tfunction isWhitelisted (address whitelisted) public view returns (bool) {\n\t\treturn whitelistedUntil[whitelisted] > now;\n\t}\n\n\tfunction isAManager (address manager) public view returns (bool) {\n\t\treturn isManager[manager];\n\t}\n\n\tfunction setExpirationTime (uint time) public onlyOwner() {\n\t\twhitelistedTime = time;\n\t}\n}\n",
+  "imports": [
+    {
+      "name": "Whitelist.sol",
+      "contents": "\n// File: contracts/util/AbstractWhitelist.sol\n\npragma solidity ^0.5.2;\n\ncontract AbstractWhitelist {\n\tfunction isAManager(address manager) public view returns (bool);\n\tfunction isWhitelisted (address whitelisted) public view returns (bool);\n\tfunction removeWhitelisted (address whitelisted) public;\n}\n\n// File: contracts/util/Whitelist.sol\n\npragma solidity ^0.5.2;\n\n\ncontract Whitelist is AbstractWhitelist {\n\taddress public owner;\n\n\tmapping (address => bool) public isManager;\n\tmapping (address => uint) public whitelistedUntil;\n\n\tuint public whitelistedTime;\n\n\tmodifier onlyOwner () {\n\t\trequire(msg.sender == owner);\n\t\t_;\n\t}\n\n\tmodifier onlyManagers () {\n\t\trequire(isManager[msg.sender]);\n\t\t_;\n\t}\n\n\tconstructor () public {\n\t\towner = msg.sender;\n\t\twhitelistedTime = 1 days;\n\t}\n\n\tfunction addManager (address manager) public onlyOwner() {\n\t\tisManager[manager] = true;\n\t}\n\n\tfunction removeManager (address manager) public onlyOwner() {\n\t\tisManager[manager] = false;\n\t}\n\n\tfunction addWhitelisted (address whitelisted) public onlyManagers() {\n\t\twhitelistedUntil[whitelisted] = now + whitelistedTime;\n\t}\n\n\tfunction removeWhitelisted (address whitelisted) public onlyManagers() {\n\t\twhitelistedUntil[whitelisted] = 0;\n\t}\n\n\tfunction isWhitelisted (address whitelisted) public view returns (bool) {\n\t\treturn whitelistedUntil[whitelisted] > now;\n\t}\n\n\tfunction isAManager (address manager) public view returns (bool) {\n\t\treturn isManager[manager];\n\t}\n\n\tfunction setExpirationTime (uint time) public onlyOwner() {\n\t\twhitelistedTime = time;\n\t}\n}\n",
+      "file": "Whitelist.sol"
+    }
+  ],
+  "libraries": {},
+  "creationData": {
+    "blockHash": "0x1855e208a9dbf615863ac0688c2459829918abea25fcd187e8489582e07ef603",
+    "blockNumber": 1944273,
+    "transactionHash": "0x12665c5662d9b099e0d626d0f62107a00f8e7e9b1c75f75221a49fe3a5cfec2e",
+    "timestamp": 1576005080
+  }
+}

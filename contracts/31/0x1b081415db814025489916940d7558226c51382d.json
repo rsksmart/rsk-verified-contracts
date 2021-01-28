@@ -1,0 +1,44 @@
+{
+  "address": "0x1b081415db814025489916940d7558226c51382d",
+  "net": {
+    "id": "31",
+    "name": "RSK Testnet"
+  },
+  "name": "TokenSolMinter",
+  "settings": {
+    "optimizer": {
+      "enabled": false,
+      "runs": 200
+    },
+    "outputSelection": {
+      "*": {
+        "*": [
+          "abi",
+          "metadata",
+          "evm.bytecode",
+          "evm.deployedBytecode",
+          "evm.methodIdentifiers"
+        ]
+      }
+    }
+  },
+  "version": "0.5.2+commit.1df8f40c",
+  "source": "pragma solidity 0.5.2;\r\n\r\ninterface IERC20Minter {\r\n    function totalSupply() external view returns (uint256);\r\n    function balanceOf(address account) external view returns (uint256);\r\n    function transfer(address recipient, uint256 amount) external returns (bool);\r\n    function allowance(address owner, address spender) external view returns (uint256);\r\n    function approve(address spender, uint256 amount) external returns (bool);\r\n    function transferFrom(address sender, address recipient, uint256 amount) external returns (bool);\r\n    function mint(address account, uint256 amount) external returns (bool);\r\n    event Transfer(address indexed from, address indexed to, uint256 value);\r\n    event Approval(address indexed owner, address indexed spender, uint256 value);\r\n}\r\n\r\ncontract TokenSolMinter {\r\n    \r\n    IERC20Minter public tokenSol;\r\n    \r\n    constructor(address tokenAddress) public {\r\n        tokenSol = IERC20Minter(tokenAddress);\r\n    }\r\n  \r\n    function mint(address account, uint256 amount) public returns (bool) {\r\n        tokenSol.mint(account, amount);\r\n        return true;\r\n    }\r\n    \r\n}\r\n",
+  "imports": [
+    {
+      "name": "TokenMinter.sol",
+      "contents": "pragma solidity 0.5.2;\r\n\r\ninterface IERC20Minter {\r\n    function totalSupply() external view returns (uint256);\r\n    function balanceOf(address account) external view returns (uint256);\r\n    function transfer(address recipient, uint256 amount) external returns (bool);\r\n    function allowance(address owner, address spender) external view returns (uint256);\r\n    function approve(address spender, uint256 amount) external returns (bool);\r\n    function transferFrom(address sender, address recipient, uint256 amount) external returns (bool);\r\n    function mint(address account, uint256 amount) external returns (bool);\r\n    event Transfer(address indexed from, address indexed to, uint256 value);\r\n    event Approval(address indexed owner, address indexed spender, uint256 value);\r\n}\r\n\r\ncontract TokenSolMinter {\r\n    \r\n    IERC20Minter public tokenSol;\r\n    \r\n    constructor(address tokenAddress) public {\r\n        tokenSol = IERC20Minter(tokenAddress);\r\n    }\r\n  \r\n    function mint(address account, uint256 amount) public returns (bool) {\r\n        tokenSol.mint(account, amount);\r\n        return true;\r\n    }\r\n    \r\n}\r\n",
+      "file": "TokenMinter.sol"
+    }
+  ],
+  "libraries": {},
+  "creationData": {
+    "blockHash": "0xc0b56fc72b4df1b71c171a9b22e1f02c3119f9db9a47eb0997dc06133474fa8a",
+    "blockNumber": 1266271,
+    "transactionHash": "0x77357387f19fdd3a797f83a29c223fa01d017969a196166370feccfb3e0bd2ac",
+    "timestamp": 1602998510
+  },
+  "constructorArguments": [
+    "0x42dde210f3e7d71d3df9ad96e05cbe0045b7cccd"
+  ]
+}

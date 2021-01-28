@@ -1,0 +1,30 @@
+{
+  "address": "0x3966edabace81d75963d91b5730e6e083cb19f89",
+  "net": {
+    "id": "31",
+    "name": "RSK Testnet"
+  },
+  "name": "Example",
+  "settings": {
+    "optimizer": {
+      "enabled": false,
+      "runs": 200
+    }
+  },
+  "version": "0.5.8+commit.23d335f2",
+  "source": "pragma solidity 0.5.8;\n\ninterface IOracle {\n  function peek() external view returns(uint256, bool);\n  function getLastPublicationBlock() external view returns (uint256);\n}\n\ninterface IMocState {\n  function getBitcoinPrice() external view returns(uint256);\n  function getBtcPriceProvider() external view returns(address);\n}\n\ncontract Example {\n    address moc_state_addr = 0x0adb40132cB0ffcEf6ED81c26A1881e214100555;\n\n    function getPrice() external view returns(uint256){\n        return IMocState(moc_state_addr).getBitcoinPrice();\n    }\n\n    function peek() external view returns(uint256, bool){\n        return IOracle(IMocState(moc_state_addr).getBtcPriceProvider()).peek();\n    }\n\n    function getLastPublicationBlock() external view returns (uint256){\n        return IOracle(IMocState(moc_state_addr).getBtcPriceProvider()).getLastPublicationBlock();\n    }\n}\n",
+  "imports": [
+    {
+      "name": "BitcoinGetPrice.sol",
+      "contents": "pragma solidity 0.5.8;\n\ninterface IOracle {\n  function peek() external view returns(uint256, bool);\n  function getLastPublicationBlock() external view returns (uint256);\n}\n\ninterface IMocState {\n  function getBitcoinPrice() external view returns(uint256);\n  function getBtcPriceProvider() external view returns(address);\n}\n\ncontract Example {\n    address moc_state_addr = 0x0adb40132cB0ffcEf6ED81c26A1881e214100555;\n\n    function getPrice() external view returns(uint256){\n        return IMocState(moc_state_addr).getBitcoinPrice();\n    }\n\n    function peek() external view returns(uint256, bool){\n        return IOracle(IMocState(moc_state_addr).getBtcPriceProvider()).peek();\n    }\n\n    function getLastPublicationBlock() external view returns (uint256){\n        return IOracle(IMocState(moc_state_addr).getBtcPriceProvider()).getLastPublicationBlock();\n    }\n}\n",
+      "file": "BitcoinGetPrice.sol"
+    }
+  ],
+  "libraries": {},
+  "creationData": {
+    "blockHash": "0x0dd6c1f94186ee3bf45bb81cd6ad74e2abe0ebe52669a1765498f6a05e20b0cb",
+    "blockNumber": 1389688,
+    "transactionHash": "0xf264902b9edc45404496feba7e6a3415ae06b67a5d961556a3848f4a874d4ff8",
+    "timestamp": 1606227126
+  }
+}

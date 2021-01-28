@@ -1,0 +1,30 @@
+{
+  "address": "0xe1db8d54450c45e63f0e60a699cab992aaf8fac2",
+  "net": {
+    "id": "31",
+    "name": "RSK Testnet"
+  },
+  "name": "HelloWorld",
+  "settings": {
+    "optimizer": {
+      "enabled": false,
+      "runs": 200
+    }
+  },
+  "version": "0.5.16+commit.9c3226ce",
+  "source": "pragma solidity >= 0.5.0 < 0.7.0;\n\ncontract HelloWorld {\n  string private message;\n\n  constructor() public {\n    message = \"Hello world!\";\n  }\n\n  function getMessage() external view returns(string memory) {\n    return message;\n  }\n\n  function setMessage(string calldata newMessage) external {\n    message = newMessage;\n  }\n}\n",
+  "imports": [
+    {
+      "name": "HelloWorld.sol",
+      "contents": "pragma solidity >= 0.5.0 < 0.7.0;\n\ncontract HelloWorld {\n  string private message;\n\n  constructor() public {\n    message = \"Hello world!\";\n  }\n\n  function getMessage() external view returns(string memory) {\n    return message;\n  }\n\n  function setMessage(string calldata newMessage) external {\n    message = newMessage;\n  }\n}\n",
+      "file": "HelloWorld.sol"
+    }
+  ],
+  "libraries": {},
+  "creationData": {
+    "blockHash": "0x4956050fca6121e03ef5448dd1a1b0b58ae4a0cd64aeabe0f66c4b3fce413a04",
+    "blockNumber": 709394,
+    "transactionHash": "0x780fc8d37ad34bd698b85818878d3eb0b8987da85d0f904add6731de624340e2",
+    "timestamp": 1584914034
+  }
+}

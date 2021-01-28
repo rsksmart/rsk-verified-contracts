@@ -1,0 +1,30 @@
+{
+  "address": "0x921a8738705a7a95eca9ed71c91fb582f8e14809",
+  "net": {
+    "id": "31",
+    "name": "RSK Testnet"
+  },
+  "name": "Multicall",
+  "settings": {
+    "optimizer": {
+      "enabled": false,
+      "runs": 200
+    }
+  },
+  "version": "0.5.17+commit.d19bba13",
+  "source": "pragma solidity >=0.5.17;\npragma experimental ABIEncoderV2;\n\n/// @title Multicall - Aggregate results from multiple read-only function calls\n/// @author Michael Elliot <mike@makerdao.com>\n/// @author Joshua Levine <joshua@makerdao.com>\n/// @author Nick Johnson <arachnid@notdot.net>\n\ncontract Multicall {\n    struct Call {\n        address target;\n        bytes callData;\n    }\n    function aggregate(Call[] calldata calls) external view returns (uint256 blockNumber, bytes[] memory returnData) {\n        blockNumber = block.number;\n        returnData = new bytes[](calls.length);\n        for(uint256 i = 0; i < calls.length; i++) {\n            uint256 size;\n            address callerTarget = calls[i].target;\n            // solhint-disable-next-line no-inline-assembly\n            assembly { size := extcodesize(callerTarget) }\n            if (size>0) {\n                (bool success, bytes memory ret) = calls[i].target.staticcall(calls[i].callData);\n                require(success, \"Multicall: Error in call\");\n                returnData[i] = ret;\n            }\n        }\n    }\n    // Helper functions\n    function getEthBalance(address addr) external view returns (uint256 balance) {\n        balance = addr.balance;\n    }\n    function getBlockHash(uint256 blockNumber) external view returns (bytes32 blockHash) {\n        blockHash = blockhash(blockNumber);\n    }\n    function getLastBlockHash() external view returns (bytes32 blockHash) {\n        blockHash = blockhash(block.number - 1);\n    }\n    function getCurrentBlockTimestamp() external view returns (uint256 timestamp) {\n        timestamp = block.timestamp;\n    }\n    function getCurrentBlockDifficulty() external view returns (uint256 difficulty) {\n        difficulty = block.difficulty;\n    }\n    function getCurrentBlockGasLimit() external view returns (uint256 gaslimit) {\n        gaslimit = block.gaslimit;\n    }\n    function getCurrentBlockCoinbase() external view returns (address coinbase) {\n        coinbase = block.coinbase;\n    }\n}\n",
+  "imports": [
+    {
+      "name": "Multicall.sol",
+      "contents": "pragma solidity >=0.5.17;\npragma experimental ABIEncoderV2;\n\n/// @title Multicall - Aggregate results from multiple read-only function calls\n/// @author Michael Elliot <mike@makerdao.com>\n/// @author Joshua Levine <joshua@makerdao.com>\n/// @author Nick Johnson <arachnid@notdot.net>\n\ncontract Multicall {\n    struct Call {\n        address target;\n        bytes callData;\n    }\n    function aggregate(Call[] calldata calls) external view returns (uint256 blockNumber, bytes[] memory returnData) {\n        blockNumber = block.number;\n        returnData = new bytes[](calls.length);\n        for(uint256 i = 0; i < calls.length; i++) {\n            uint256 size;\n            address callerTarget = calls[i].target;\n            // solhint-disable-next-line no-inline-assembly\n            assembly { size := extcodesize(callerTarget) }\n            if (size>0) {\n                (bool success, bytes memory ret) = calls[i].target.staticcall(calls[i].callData);\n                require(success, \"Multicall: Error in call\");\n                returnData[i] = ret;\n            }\n        }\n    }\n    // Helper functions\n    function getEthBalance(address addr) external view returns (uint256 balance) {\n        balance = addr.balance;\n    }\n    function getBlockHash(uint256 blockNumber) external view returns (bytes32 blockHash) {\n        blockHash = blockhash(blockNumber);\n    }\n    function getLastBlockHash() external view returns (bytes32 blockHash) {\n        blockHash = blockhash(block.number - 1);\n    }\n    function getCurrentBlockTimestamp() external view returns (uint256 timestamp) {\n        timestamp = block.timestamp;\n    }\n    function getCurrentBlockDifficulty() external view returns (uint256 difficulty) {\n        difficulty = block.difficulty;\n    }\n    function getCurrentBlockGasLimit() external view returns (uint256 gaslimit) {\n        gaslimit = block.gaslimit;\n    }\n    function getCurrentBlockCoinbase() external view returns (address coinbase) {\n        coinbase = block.coinbase;\n    }\n}\n",
+      "file": "Multicall.sol"
+    }
+  ],
+  "libraries": {},
+  "creationData": {
+    "blockHash": "0x265cfdc56323d210fb84d2b57bd822f58eb46cc72f1e84181630313fe944f642",
+    "blockNumber": 1002354,
+    "transactionHash": "0xa68c798a5287bf84d9442d34b5c2d8ba013a048b4877daff5c12ae1fce049afc",
+    "timestamp": 1594478614
+  }
+}

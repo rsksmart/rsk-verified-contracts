@@ -1,0 +1,30 @@
+{
+  "address": "0xa5711e310a2b8da2bbc0b106c8ccf26def1bae38",
+  "net": {
+    "id": "31",
+    "name": "RSK Testnet"
+  },
+  "name": "Register",
+  "settings": {
+    "optimizer": {
+      "enabled": false,
+      "runs": 200
+    }
+  },
+  "version": "0.5.4+commit.9549d8ff",
+  "source": "pragma solidity 0.5.4;\r\n\r\ncontract Register {\r\n    string private info;\r\n\r\n    function setInfo(string memory _info) public {\r\n        info = _info;\r\n    }\r\n    \r\n    function getInfo() public view returns (string memory) {\r\n        return info;\r\n    }\r\n}",
+  "imports": [
+    {
+      "name": "Register.sol",
+      "contents": "pragma solidity 0.5.4;\r\n\r\ncontract Register {\r\n    string private info;\r\n\r\n    function setInfo(string memory _info) public {\r\n        info = _info;\r\n    }\r\n    \r\n    function getInfo() public view returns (string memory) {\r\n        return info;\r\n    }\r\n}",
+      "file": "Register.sol"
+    }
+  ],
+  "libraries": {},
+  "creationData": {
+    "blockHash": "0x3311104485f06dac67412bfc3fe4044649d72e35c544d7b1c9d367863efdce9e",
+    "blockNumber": 796427,
+    "transactionHash": "0xea16fa133690a051a3df9abe10fd54ee02b55033e0e126412715e000eb693ae6",
+    "timestamp": 1587699556
+  }
+}

@@ -1,0 +1,46 @@
+{
+  "address": "0x2edcecaabca695f3a1c45c09fbfe2e2354ae3a2e",
+  "net": {
+    "id": "30",
+    "name": "RSK Mainnet"
+  },
+  "name": "SubdomainRegistrar",
+  "settings": {
+    "optimizer": {
+      "enabled": false,
+      "runs": 200
+    },
+    "outputSelection": {
+      "*": {
+        "*": [
+          "abi",
+          "metadata",
+          "evm.bytecode",
+          "evm.deployedBytecode",
+          "evm.methodIdentifiers"
+        ]
+      }
+    }
+  },
+  "version": "0.5.12+commit.7709ece9",
+  "source": "\n// File: contracts/registry/AbstractRNS.sol\n\npragma solidity ^0.5.2;\n\ncontract AbstractRNS {\n    function owner(bytes32 node) public view returns(address);\n    function resolver(bytes32 node) public view returns(address);\n    function ttl(bytes32 node) public view returns(uint64);\n    function setOwner(bytes32 node, address ownerAddress) public;\n    function setSubnodeOwner(bytes32 node, bytes32 label, address ownerAddress) public;\n    function setResolver(bytes32 node, address resolverAddress) public;\n    function setTTL(bytes32 node, uint64 ttlValue) public;\n\n    // Logged when the owner of a node assigns a new owner to a subnode.\n    event NewOwner(bytes32 indexed node, bytes32 indexed label, address ownerAddress);\n\n    // Logged when the owner of a node transfers ownership to a new account.\n    event Transfer(bytes32 indexed node, address ownerAddress);\n\n    // Logged when the resolver for a node changes.\n    event NewResolver(bytes32 indexed node, address resolverAddress);\n\n    // Logged when the TTL of a node changes\n    event NewTTL(bytes32 indexed node, uint64 ttlValue);\n}\n\n// File: contracts/util/AbstractWhitelist.sol\n\npragma solidity ^0.5.2;\n\ncontract AbstractWhitelist {\n\tfunction isAManager(address manager) public view returns (bool);\n\tfunction isWhitelisted (address whitelisted) public view returns (bool);\n\tfunction removeWhitelisted (address whitelisted) public;\n}\n\n// File: contracts/resolver/AbstractStringResolver.sol\n\npragma solidity ^0.5.2;\n\ninterface AbstractStringResolver {\n    function supportsInterface(bytes4 interfaceID) external pure returns (bool);\n    function str(bytes32 node) external view returns (string memory);\n    function setStr(bytes32 node, string calldata _string) external;\n}\n\n// File: contracts/registrar/SubdomainRegistrar.sol\n\npragma solidity ^0.5.2;\n\n\n\n\n/**\n * @title SubdomainRegistrar\n * Allows anyone who is whitelisted to create subnodes under a given RNS node\n */\ncontract SubdomainRegistrar {\n    address public owner = msg.sender;\n    AbstractRNS public rns;\n    AbstractWhitelist public whitelist;\n    bytes32 public rootNode;\n\n    modifier onlyOwner () {\n        require(\n            msg.sender == owner,\n            \"Only owner\"\n        );\n        _;\n    }\n\n    modifier onlyManager () {\n        require(\n            whitelist.isAManager(msg.sender),\n            \"Only manager\"\n        );\n        _;\n    }\n\n    /**\n     * @dev Constructor\n     * @param _rns AbstractRNS RNS registry address.\n     * @param _whitelist AbstractWhitelist Whitelist to manage who can register domains.\n     * @param _rootNode bytes32 An owned node. The contract emits subnodes under this node.\n     */\n    constructor (AbstractRNS _rns, AbstractWhitelist _whitelist, bytes32 _rootNode) public {\n        rns = _rns;\n        whitelist = _whitelist;\n        rootNode = _rootNode;\n    }\n\n    /**\n     * @dev Registrers a subnode under a given and delegated node.\n     * @param label bytres32 The label of the new subnode.\n     */\n    function register (bytes32 label, address addr, string calldata stringResolution) external onlyManager() {\n        bytes32 subnode = keccak256(abi.encodePacked(rootNode, label));\n        require(\n            rns.owner(subnode) == address(0),\n            \"Already owned\"\n        );\n\n        AbstractStringResolver resolver = AbstractStringResolver(rns.resolver(rootNode));\n\n        rns.setSubnodeOwner(rootNode, label, address(this));\n        resolver.setStr(subnode, stringResolution);\n\n        rns.setOwner(subnode, addr);\n    }\n\n    /**\n     * @dev Transfers back the root node ownership to the contract's owner.\n     */\n    function transferOwnershipBack () public onlyOwner() {\n        rns.setOwner(rootNode, owner);\n    }\n}\n",
+  "imports": [
+    {
+      "name": "SubdomainRegistrar.sol",
+      "contents": "\n// File: contracts/registry/AbstractRNS.sol\n\npragma solidity ^0.5.2;\n\ncontract AbstractRNS {\n    function owner(bytes32 node) public view returns(address);\n    function resolver(bytes32 node) public view returns(address);\n    function ttl(bytes32 node) public view returns(uint64);\n    function setOwner(bytes32 node, address ownerAddress) public;\n    function setSubnodeOwner(bytes32 node, bytes32 label, address ownerAddress) public;\n    function setResolver(bytes32 node, address resolverAddress) public;\n    function setTTL(bytes32 node, uint64 ttlValue) public;\n\n    // Logged when the owner of a node assigns a new owner to a subnode.\n    event NewOwner(bytes32 indexed node, bytes32 indexed label, address ownerAddress);\n\n    // Logged when the owner of a node transfers ownership to a new account.\n    event Transfer(bytes32 indexed node, address ownerAddress);\n\n    // Logged when the resolver for a node changes.\n    event NewResolver(bytes32 indexed node, address resolverAddress);\n\n    // Logged when the TTL of a node changes\n    event NewTTL(bytes32 indexed node, uint64 ttlValue);\n}\n\n// File: contracts/util/AbstractWhitelist.sol\n\npragma solidity ^0.5.2;\n\ncontract AbstractWhitelist {\n\tfunction isAManager(address manager) public view returns (bool);\n\tfunction isWhitelisted (address whitelisted) public view returns (bool);\n\tfunction removeWhitelisted (address whitelisted) public;\n}\n\n// File: contracts/resolver/AbstractStringResolver.sol\n\npragma solidity ^0.5.2;\n\ninterface AbstractStringResolver {\n    function supportsInterface(bytes4 interfaceID) external pure returns (bool);\n    function str(bytes32 node) external view returns (string memory);\n    function setStr(bytes32 node, string calldata _string) external;\n}\n\n// File: contracts/registrar/SubdomainRegistrar.sol\n\npragma solidity ^0.5.2;\n\n\n\n\n/**\n * @title SubdomainRegistrar\n * Allows anyone who is whitelisted to create subnodes under a given RNS node\n */\ncontract SubdomainRegistrar {\n    address public owner = msg.sender;\n    AbstractRNS public rns;\n    AbstractWhitelist public whitelist;\n    bytes32 public rootNode;\n\n    modifier onlyOwner () {\n        require(\n            msg.sender == owner,\n            \"Only owner\"\n        );\n        _;\n    }\n\n    modifier onlyManager () {\n        require(\n            whitelist.isAManager(msg.sender),\n            \"Only manager\"\n        );\n        _;\n    }\n\n    /**\n     * @dev Constructor\n     * @param _rns AbstractRNS RNS registry address.\n     * @param _whitelist AbstractWhitelist Whitelist to manage who can register domains.\n     * @param _rootNode bytes32 An owned node. The contract emits subnodes under this node.\n     */\n    constructor (AbstractRNS _rns, AbstractWhitelist _whitelist, bytes32 _rootNode) public {\n        rns = _rns;\n        whitelist = _whitelist;\n        rootNode = _rootNode;\n    }\n\n    /**\n     * @dev Registrers a subnode under a given and delegated node.\n     * @param label bytres32 The label of the new subnode.\n     */\n    function register (bytes32 label, address addr, string calldata stringResolution) external onlyManager() {\n        bytes32 subnode = keccak256(abi.encodePacked(rootNode, label));\n        require(\n            rns.owner(subnode) == address(0),\n            \"Already owned\"\n        );\n\n        AbstractStringResolver resolver = AbstractStringResolver(rns.resolver(rootNode));\n\n        rns.setSubnodeOwner(rootNode, label, address(this));\n        resolver.setStr(subnode, stringResolution);\n\n        rns.setOwner(subnode, addr);\n    }\n\n    /**\n     * @dev Transfers back the root node ownership to the contract's owner.\n     */\n    function transferOwnershipBack () public onlyOwner() {\n        rns.setOwner(rootNode, owner);\n    }\n}\n",
+      "file": "SubdomainRegistrar.sol"
+    }
+  ],
+  "libraries": {},
+  "creationData": {
+    "blockHash": "0xfc5cd3fd3071aca6dc39a65899cd629e889236fee7376ba76772e215f03e6629",
+    "blockNumber": 1945171,
+    "transactionHash": "0xc40f03428001497e245982c45e53da0ea4afad0cf302574aac723479d12350ea",
+    "timestamp": 1576034441
+  },
+  "constructorArguments": [
+    "0xcb868aeabd31e2b66f74e9a55cf064abb31a4ad5",
+    "0xe553327595fe7945b7e2e680f15e3fc954a52e3b",
+    "0x8efc1017c04f4e53c3f5dde50ca25c5c4c454e69b2f7b47ce446ea689db45865"
+  ]
+}

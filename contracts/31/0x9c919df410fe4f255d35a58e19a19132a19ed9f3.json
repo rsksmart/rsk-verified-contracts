@@ -1,0 +1,30 @@
+{
+  "address": "0x9c919df410fe4f255d35a58e19a19132a19ed9f3",
+  "net": {
+    "id": "31",
+    "name": "RSK Testnet"
+  },
+  "name": "MarketPriceManager",
+  "settings": {
+    "optimizer": {
+      "enabled": false,
+      "runs": 200
+    }
+  },
+  "version": "0.5.17+commit.d19bba13",
+  "source": "pragma solidity >=0.4.24 <=0.5.17;\r\n\r\ncontract MarketPriceManager {\r\n    \r\n    uint MarketPriceData;\r\n    address owner;\r\n\r\n    event marketprice(uint price);\r\n\r\n    constructor () public {\r\n        owner = msg.sender;\r\n        MarketPriceData = 0;\r\n    }\r\n\r\n    function UpdateMarketPrice(uint x) public {\r\n        MarketPriceData = x;\r\n        emit marketprice(MarketPriceData);\r\n    }\r\n\r\n    function GetMarketPrice() public returns (uint) {\r\n        emit marketprice(MarketPriceData);\r\n        return MarketPriceData;\r\n    }\r\n}",
+  "imports": [
+    {
+      "name": "MarketPriceManager.sol",
+      "contents": "pragma solidity >=0.4.24 <=0.5.17;\r\n\r\ncontract MarketPriceManager {\r\n    \r\n    uint MarketPriceData;\r\n    address owner;\r\n\r\n    event marketprice(uint price);\r\n\r\n    constructor () public {\r\n        owner = msg.sender;\r\n        MarketPriceData = 0;\r\n    }\r\n\r\n    function UpdateMarketPrice(uint x) public {\r\n        MarketPriceData = x;\r\n        emit marketprice(MarketPriceData);\r\n    }\r\n\r\n    function GetMarketPrice() public returns (uint) {\r\n        emit marketprice(MarketPriceData);\r\n        return MarketPriceData;\r\n    }\r\n}",
+      "file": "MarketPriceManager.sol"
+    }
+  ],
+  "libraries": {},
+  "creationData": {
+    "blockHash": "0x5da17d926382b1ab7bfceb6477cda1bd5f4ff2c337cb26b26ce6e752c092300a",
+    "blockNumber": 1130694,
+    "transactionHash": "0x334310d504ba71163404fa52811733369e78a4f0cb3ada40837ae34ede85ff72",
+    "timestamp": 1598597845
+  }
+}

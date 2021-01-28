@@ -1,0 +1,44 @@
+{
+  "address": "0xb5ba08a948233eaa9d469a92d8883fe93e00a32d",
+  "net": {
+    "id": "31",
+    "name": "RSK Testnet"
+  },
+  "name": "RSKSimpleKeyManagement",
+  "settings": {
+    "optimizer": {
+      "enabled": false,
+      "runs": 200
+    },
+    "outputSelection": {
+      "*": {
+        "*": [
+          "abi",
+          "metadata",
+          "evm.bytecode",
+          "evm.deployedBytecode",
+          "evm.methodIdentifiers"
+        ]
+      }
+    }
+  },
+  "version": "0.6.2+commit.bacdbe57",
+  "source": "pragma solidity ^0.6.0;\r\n\r\n/*\r\n    The RSK Simple Key Management Smart Contract Service Deals with the\r\n    Persistence and management of sensitive keys\r\n\r\n    *** The simplest version of the RSK Key Management ***\r\n\r\n    Inspired by the KMS - The Key management Service provided by Azure, AWS and \r\n    Other big vendors.\r\n\r\n    Uses the IterableMapping for the key/value pair management.\r\n\r\n    Reused and Enhanced Code - Iterable Mapping  \r\n    https://solidity-by-example.org/0.6/app/iterable-mapping/\r\n*/\r\n\r\ncontract RSKSimpleKeyManagement {\r\n    \r\n    string private tenant;\r\n    address private owner; \r\n\r\n    struct Map {\r\n        string[] keys;\r\n        mapping(string => string) values;\r\n        mapping(string => uint) indexOf;\r\n        mapping(string => bool) inserted;\r\n    }\r\n\r\n    Map private map;\r\n\r\n    event SetKeyEvent(string key, string description);\r\n    event RemoveKeyEvent(string key, string description);\r\n\r\n    constructor (string memory _tenant) public {\r\n        tenant = _tenant;\r\n        owner = msg.sender;\r\n    }\r\n\r\n    modifier isOwner {\r\n       require(\r\n            msg.sender == owner,\r\n            \"Only owner can call this function.\"\r\n        );\r\n      _;\r\n    } \r\n\r\n    function setItem(string memory key, string memory value) public {\r\n        if (map.inserted[key]) {\r\n            map.values[key] = value;\r\n        } else {\r\n            map.inserted[key] = true;\r\n            map.values[key] = value;\r\n            map.indexOf[key] = map.keys.length;\r\n            map.keys.push(key);\r\n        }\r\n        emit SetKeyEvent(key, 'Within the setItem Operation');\r\n    }\r\n    \r\n    function getItem(string memory key) public view returns(string memory) {\r\n        return map.values[key];\r\n    }\r\n\r\n    function removeItem(string memory key) public {\r\n        if (!map.inserted[key]) {\r\n            return;\r\n        }\r\n\r\n        delete map.inserted[key];\r\n        delete map.values[key];\r\n\r\n        uint index = map.indexOf[key];\r\n        uint lastIndex = map.keys.length - 1;\r\n        string memory lastKey = map.keys[lastIndex];\r\n\r\n        map.indexOf[lastKey] = index;\r\n        delete map.indexOf[key];\r\n\r\n        map.keys[index] = lastKey;\r\n        map.keys.pop();\r\n\r\n        emit RemoveKeyEvent(key, 'Within the removeItem Operation');\r\n    }\r\n\r\n    function kill() public isOwner {\r\n        selfdestruct(msg.sender);\r\n    }\r\n}",
+  "imports": [
+    {
+      "name": "RSKSimpleKeyManagement.sol",
+      "contents": "pragma solidity ^0.6.0;\r\n\r\n/*\r\n    The RSK Simple Key Management Smart Contract Service Deals with the\r\n    Persistence and management of sensitive keys\r\n\r\n    *** The simplest version of the RSK Key Management ***\r\n\r\n    Inspired by the KMS - The Key management Service provided by Azure, AWS and \r\n    Other big vendors.\r\n\r\n    Uses the IterableMapping for the key/value pair management.\r\n\r\n    Reused and Enhanced Code - Iterable Mapping  \r\n    https://solidity-by-example.org/0.6/app/iterable-mapping/\r\n*/\r\n\r\ncontract RSKSimpleKeyManagement {\r\n    \r\n    string private tenant;\r\n    address private owner; \r\n\r\n    struct Map {\r\n        string[] keys;\r\n        mapping(string => string) values;\r\n        mapping(string => uint) indexOf;\r\n        mapping(string => bool) inserted;\r\n    }\r\n\r\n    Map private map;\r\n\r\n    event SetKeyEvent(string key, string description);\r\n    event RemoveKeyEvent(string key, string description);\r\n\r\n    constructor (string memory _tenant) public {\r\n        tenant = _tenant;\r\n        owner = msg.sender;\r\n    }\r\n\r\n    modifier isOwner {\r\n       require(\r\n            msg.sender == owner,\r\n            \"Only owner can call this function.\"\r\n        );\r\n      _;\r\n    } \r\n\r\n    function setItem(string memory key, string memory value) public {\r\n        if (map.inserted[key]) {\r\n            map.values[key] = value;\r\n        } else {\r\n            map.inserted[key] = true;\r\n            map.values[key] = value;\r\n            map.indexOf[key] = map.keys.length;\r\n            map.keys.push(key);\r\n        }\r\n        emit SetKeyEvent(key, 'Within the setItem Operation');\r\n    }\r\n    \r\n    function getItem(string memory key) public view returns(string memory) {\r\n        return map.values[key];\r\n    }\r\n\r\n    function removeItem(string memory key) public {\r\n        if (!map.inserted[key]) {\r\n            return;\r\n        }\r\n\r\n        delete map.inserted[key];\r\n        delete map.values[key];\r\n\r\n        uint index = map.indexOf[key];\r\n        uint lastIndex = map.keys.length - 1;\r\n        string memory lastKey = map.keys[lastIndex];\r\n\r\n        map.indexOf[lastKey] = index;\r\n        delete map.indexOf[key];\r\n\r\n        map.keys[index] = lastKey;\r\n        map.keys.pop();\r\n\r\n        emit RemoveKeyEvent(key, 'Within the removeItem Operation');\r\n    }\r\n\r\n    function kill() public isOwner {\r\n        selfdestruct(msg.sender);\r\n    }\r\n}",
+      "file": "RSKSimpleKeyManagement.sol"
+    }
+  ],
+  "libraries": {},
+  "creationData": {
+    "blockHash": "0x4acee7c9754a7229d25eb960ba51e5f94bd261430ab9aa775b22071fe69dda96",
+    "blockNumber": 1327361,
+    "transactionHash": "0x99f9dba7971c8127ca2b17221af7a8b01024867da177992f4e0ef9a8c8e4c83c",
+    "timestamp": 1604842679
+  },
+  "constructorArguments": [
+    "RSK"
+  ]
+}

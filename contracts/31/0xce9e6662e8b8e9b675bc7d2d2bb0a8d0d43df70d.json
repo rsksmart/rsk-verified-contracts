@@ -1,0 +1,30 @@
+{
+  "address": "0xce9e6662e8b8e9b675bc7d2d2bb0a8d0d43df70d",
+  "net": {
+    "id": "31",
+    "name": "RSK Testnet"
+  },
+  "name": "prueba",
+  "settings": {
+    "optimizer": {
+      "enabled": false,
+      "runs": 200
+    }
+  },
+  "version": "0.4.24+commit.e67f0147",
+  "source": "pragma solidity ^0.4.24;\r\n\r\ncontract prueba {\r\n    uint storedData;\r\n\r\n    function set(uint x) public {\r\n        storedData = x;\r\n    }\r\n\r\n    function get() public view returns (uint) {\r\n        return storedData;\r\n    }\r\n}",
+  "imports": [
+    {
+      "name": "prueba.sol",
+      "contents": "pragma solidity ^0.4.24;\r\n\r\ncontract prueba {\r\n    uint storedData;\r\n\r\n    function set(uint x) public {\r\n        storedData = x;\r\n    }\r\n\r\n    function get() public view returns (uint) {\r\n        return storedData;\r\n    }\r\n}",
+      "file": "prueba.sol"
+    }
+  ],
+  "libraries": {},
+  "creationData": {
+    "blockHash": "0x3e5075813c7ca78b92ee5d5113217a986d7e15731efbdd7339f60baa888bdaa5",
+    "blockNumber": 1446695,
+    "transactionHash": "0xf904923ea0e7b62f1d68f4b76528375627096c2b2efc4b89603e863aad650e24",
+    "timestamp": 1608074270
+  }
+}

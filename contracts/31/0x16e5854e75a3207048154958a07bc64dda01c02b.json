@@ -1,0 +1,31 @@
+{
+  "address": "0x16e5854e75a3207048154958a07bc64dda01c02b",
+  "net": {
+    "id": "31",
+    "name": "RSK Testnet"
+  },
+  "name": "SimpleStorage",
+  "settings": {
+    "optimizer": {
+      "enabled": false,
+      "runs": 200
+    },
+    "evmVersion": "byzantium"
+  },
+  "version": "0.6.1+commit.e6f7d5a4",
+  "source": "pragma solidity >=0.4.0 <0.7.0;\r\n\r\ncontract SimpleStorage {\r\n    uint storedData;\r\n\r\n    function set(uint x) public {\r\n        storedData = x;\r\n    }\r\n\r\n    function get() public view returns (uint) {\r\n        return storedData;\r\n    }\r\n}\r\n",
+  "imports": [
+    {
+      "name": "SimpleStroage.sol",
+      "contents": "pragma solidity >=0.4.0 <0.7.0;\r\n\r\ncontract SimpleStorage {\r\n    uint storedData;\r\n\r\n    function set(uint x) public {\r\n        storedData = x;\r\n    }\r\n\r\n    function get() public view returns (uint) {\r\n        return storedData;\r\n    }\r\n}\r\n",
+      "file": "SimpleStroage.sol"
+    }
+  ],
+  "libraries": {},
+  "creationData": {
+    "blockHash": "0x1dc41920bfce52c0688fa671a86676084e9714f3f807115e0b3a7ab0fb2c2910",
+    "blockNumber": 1006099,
+    "transactionHash": "0x2c427fa1c85098ea9e557a5bedab884ebaa51f3512bf6908c4837df3c31d14d5",
+    "timestamp": 1594603687
+  }
+}

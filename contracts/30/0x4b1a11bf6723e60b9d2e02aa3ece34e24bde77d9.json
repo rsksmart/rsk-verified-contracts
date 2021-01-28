@@ -1,0 +1,56 @@
+{
+  "address": "0x4b1a11bf6723e60b9d2e02aa3ece34e24bde77d9",
+  "net": {
+    "id": "30",
+    "name": "RSK Mainnet"
+  },
+  "name": "NameResolver",
+  "settings": {
+    "optimizer": {
+      "enabled": false,
+      "runs": 200
+    },
+    "outputSelection": {
+      "*": {
+        "*": [
+          "abi",
+          "metadata",
+          "evm.bytecode",
+          "evm.deployedBytecode",
+          "evm.methodIdentifiers"
+        ]
+      }
+    }
+  },
+  "version": "0.5.8+commit.23d335f2",
+  "source": "pragma solidity ^0.5.0;\n\nimport \"./ResolverBase.sol\";\nimport \"@rsksmart/rns-artifacts/contracts/registry/AbstractRNS.sol\";\n\n/// source: https://github.com/ensdomains/resolvers/blob/master/contracts/profiles/NameResolver.sol\ncontract NameResolver is ResolverBase {\n    bytes4 constant private NAME_INTERFACE_ID = 0x691f3431;\n    AbstractRNS rns;\n\n    event NameChanged(bytes32 indexed node, string name);\n\n    mapping(bytes32=>string) names;\n\n    modifier onlyOwner (bytes32 node) {\n        require(msg.sender == rns.owner(node), \"Only owner\");\n        _;\n    }\n\n    constructor (AbstractRNS _rns) public {\n        rns = _rns;\n    }\n\n    /// @notice Sets the name associated with an RNS node, for reverse records.\n    /// @dev May only be called by the owner of that node in the RNS registry.\n    /// @param node The node to update.\n    /// @param name The name to set.\n    function setName(bytes32 node, string calldata name) external onlyOwner(node) {\n        names[node] = name;\n        emit NameChanged(node, name);\n    }\n\n    /// @notice Returns the name associated with an RNS node, for reverse records.\n    /// @dev Defined in EIP181.\n    /// @param node The node to query.\n    /// @return The associated name.\n    function name(bytes32 node) external view returns (string memory) {\n        return names[node];\n    }\n\n    function supportsInterface(bytes4 interfaceID) public pure returns(bool) {\n        return interfaceID == NAME_INTERFACE_ID || super.supportsInterface(interfaceID);\n    }\n}\n",
+  "imports": [
+    {
+      "name": "NameResolver.sol",
+      "contents": "pragma solidity ^0.5.0;\n\nimport \"./ResolverBase.sol\";\nimport \"@rsksmart/rns-artifacts/contracts/registry/AbstractRNS.sol\";\n\n/// source: https://github.com/ensdomains/resolvers/blob/master/contracts/profiles/NameResolver.sol\ncontract NameResolver is ResolverBase {\n    bytes4 constant private NAME_INTERFACE_ID = 0x691f3431;\n    AbstractRNS rns;\n\n    event NameChanged(bytes32 indexed node, string name);\n\n    mapping(bytes32=>string) names;\n\n    modifier onlyOwner (bytes32 node) {\n        require(msg.sender == rns.owner(node), \"Only owner\");\n        _;\n    }\n\n    constructor (AbstractRNS _rns) public {\n        rns = _rns;\n    }\n\n    /// @notice Sets the name associated with an RNS node, for reverse records.\n    /// @dev May only be called by the owner of that node in the RNS registry.\n    /// @param node The node to update.\n    /// @param name The name to set.\n    function setName(bytes32 node, string calldata name) external onlyOwner(node) {\n        names[node] = name;\n        emit NameChanged(node, name);\n    }\n\n    /// @notice Returns the name associated with an RNS node, for reverse records.\n    /// @dev Defined in EIP181.\n    /// @param node The node to query.\n    /// @return The associated name.\n    function name(bytes32 node) external view returns (string memory) {\n        return names[node];\n    }\n\n    function supportsInterface(bytes4 interfaceID) public pure returns(bool) {\n        return interfaceID == NAME_INTERFACE_ID || super.supportsInterface(interfaceID);\n    }\n}\n",
+      "file": "NameResolver.sol"
+    },
+    {
+      "name": "ResolverBase.sol",
+      "contents": "pragma solidity ^0.5.0;\n\n/// source: https://github.com/ensdomains/resolvers/blob/master/contracts/ResolverBase.sol\ncontract ResolverBase {\n    bytes4 private constant INTERFACE_META_ID = 0x01ffc9a7;\n\n    function supportsInterface(bytes4 interfaceID) public pure returns(bool) {\n        return interfaceID == INTERFACE_META_ID;\n    }\n}\n"
+    },
+    {
+      "name": "AbstractRNS.sol",
+      "contents": "pragma solidity ^0.5.2;\n\ncontract AbstractRNS {\n    function owner(bytes32 node) public view returns(address);\n    function resolver(bytes32 node) public view returns(address);\n    function ttl(bytes32 node) public view returns(uint64);\n    function setOwner(bytes32 node, address ownerAddress) public;\n    function setSubnodeOwner(bytes32 node, bytes32 label, address ownerAddress) public;\n    function setResolver(bytes32 node, address resolverAddress) public;\n    function setTTL(bytes32 node, uint64 ttlValue) public;\n\n    // Logged when the owner of a node assigns a new owner to a subnode.\n    event NewOwner(bytes32 indexed node, bytes32 indexed label, address ownerAddress);\n\n    // Logged when the owner of a node transfers ownership to a new account.\n    event Transfer(bytes32 indexed node, address ownerAddress);\n\n    // Logged when the resolver for a node changes.\n    event NewResolver(bytes32 indexed node, address resolverAddress);\n\n    // Logged when the TTL of a node changes\n    event NewTTL(bytes32 indexed node, uint64 ttlValue);\n}\n"
+    },
+    {
+      "name": "RNS.sol",
+      "contents": "pragma solidity ^0.5.2;\n\nimport \"./AbstractRNS.sol\";\n\n/**\n * The RNS registry contract.\n */\ncontract RNS is AbstractRNS {\n    struct Record {\n        address owner;\n        address resolver;\n        uint64 ttl;\n    }\n\n    mapping(bytes32=>Record) records;\n\n    // Permits modifications only by the owner of the specified node.\n    modifier only_owner(bytes32 node) {\n        require(records[node].owner == msg.sender);\n        _;\n    }\n\n    /**\n     * Constructs a new RNS registrar.\n     */\n    constructor() public {\n        records[bytes32(0)].owner = msg.sender;\n    }\n\n    /**\n     * Returns the address that owns the specified node.\n     */\n    function owner(bytes32 node) public view returns (address) {\n        return records[node].owner;\n    }\n\n    /**\n     * Returns the address of the resolver for the specified node.\n     */\n    function resolver(bytes32 node) public view returns (address) {\n        return records[node].resolver;\n    }\n\n    /**\n     * Returns the TTL of a node, and any records associated with it.\n     */\n    function ttl(bytes32 node) public view returns (uint64) {\n        return records[node].ttl;\n    }\n\n    /**\n     * Transfers ownership of a node to a new address. May only be called by the current\n     * owner of the node.\n     * @param node The node to transfer ownership of.\n     * @param ownerAddress The address of the new owner.\n     */\n    function setOwner(bytes32 node, address ownerAddress) public only_owner(node) {\n        emit Transfer(node, ownerAddress);\n        records[node].owner = ownerAddress;\n    }\n\n    /**\n     * Transfers ownership of a subnode keccak256(node, label) to a new address. May only be\n     * called by the owner of the parent node.\n     * @param node The parent node.\n     * @param label The hash of the label specifying the subnode.\n     * @param ownerAddress The address of the new owner.\n     */\n    function setSubnodeOwner(bytes32 node, bytes32 label, address ownerAddress) public only_owner(node) {\n        bytes32 subnode = keccak256(abi.encodePacked(node, label));\n        emit NewOwner(node, label, ownerAddress);\n        records[subnode].owner = ownerAddress;\n\n        emit NewResolver(subnode, records[node].resolver);\n        records[subnode].resolver = records[node].resolver;\n    }\n\n    /**\n     * Sets the resolver address for the specified node.\n     * @param node The node to update.\n     * @param resolverAddress The address of the resolver.\n     */\n    function setResolver(bytes32 node, address resolverAddress) public only_owner(node) {\n        emit NewResolver(node, resolverAddress);\n        records[node].resolver = resolverAddress;\n    }\n\n    /**\n     * Sets the TTL for the specified node.\n     * @param node The node to update.\n     * @param ttlValue The TTL in seconds.\n     */\n    function setTTL(bytes32 node, uint64 ttlValue) public only_owner(node) {\n        emit NewTTL(node, ttlValue);\n        records[node].ttl = ttlValue;\n    }\n\n    /**\n     * Sets the default resolver for new nodes\n     * @param _resolver The address of the new defaultResolver\n     */\n    function setDefaultResolver(address _resolver) public only_owner(0) {\n        records[bytes32(0)].resolver = _resolver;\n    }\n}\n"
+    }
+  ],
+  "libraries": {},
+  "creationData": {
+    "blockHash": "0x87bd94bdc9e85331eeae3ed532d96e20b5f59c848fe06c3d1f8aae64ed8a1a67",
+    "blockNumber": 1721969,
+    "transactionHash": "0xd72248a9fe796a8450db74601b09b763b0c0871368e7b1e2c736f17eb0c7b385",
+    "timestamp": 1568904212
+  },
+  "constructorArguments": [
+    "0xcb868aeabd31e2b66f74e9a55cf064abb31a4ad5"
+  ]
+}

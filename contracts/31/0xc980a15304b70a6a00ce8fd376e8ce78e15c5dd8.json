@@ -1,0 +1,52 @@
+{
+  "address": "0xc980a15304b70a6a00ce8fd376e8ce78e15c5dd8",
+  "net": {
+    "id": "31",
+    "name": "RSK Testnet"
+  },
+  "name": "StringResolver",
+  "settings": {
+    "optimizer": {
+      "enabled": false,
+      "runs": 200
+    },
+    "outputSelection": {
+      "*": {
+        "*": [
+          "abi",
+          "metadata",
+          "evm.bytecode",
+          "evm.deployedBytecode",
+          "evm.methodIdentifiers"
+        ]
+      }
+    }
+  },
+  "version": "0.5.12+commit.7709ece9",
+  "source": "pragma solidity ^0.5.11;\n\nimport \"@rsksmart/rns-registry/contracts/AbstractRNS.sol\";\nimport \"./AbstractStringResolver.sol\";\n\ncontract StringResolver is AbstractStringResolver {\n    AbstractRNS rns;\n\n    mapping(bytes32 => string) public nodeStr;\n\n    modifier onlyNodeOwner(bytes32 node) {\n        require(msg.sender == rns.owner(node), \"Only node owner.\");\n        _;\n    }\n\n    constructor(AbstractRNS _rns) public {\n        rns = _rns;\n    }\n\n    /// @notice Returns the current str record for a domain.\n    /// @param node domain\n    /// @return str record\n    function str(bytes32 node) external view returns (string memory) {\n        return nodeStr[node];\n    }\n\n    /// @notice Sets the str record for a domain.\n    /// @dev Only node owner.\n    /// @param node domain\n    /// @param newStr record value\n    function setStr(bytes32 node, string calldata newStr) external onlyNodeOwner(node) {\n        emit NewStr(node, newStr);\n        nodeStr[node] = newStr;\n    }\n}\n",
+  "imports": [
+    {
+      "name": "StringResolver.sol",
+      "contents": "pragma solidity ^0.5.11;\n\nimport \"@rsksmart/rns-registry/contracts/AbstractRNS.sol\";\nimport \"./AbstractStringResolver.sol\";\n\ncontract StringResolver is AbstractStringResolver {\n    AbstractRNS rns;\n\n    mapping(bytes32 => string) public nodeStr;\n\n    modifier onlyNodeOwner(bytes32 node) {\n        require(msg.sender == rns.owner(node), \"Only node owner.\");\n        _;\n    }\n\n    constructor(AbstractRNS _rns) public {\n        rns = _rns;\n    }\n\n    /// @notice Returns the current str record for a domain.\n    /// @param node domain\n    /// @return str record\n    function str(bytes32 node) external view returns (string memory) {\n        return nodeStr[node];\n    }\n\n    /// @notice Sets the str record for a domain.\n    /// @dev Only node owner.\n    /// @param node domain\n    /// @param newStr record value\n    function setStr(bytes32 node, string calldata newStr) external onlyNodeOwner(node) {\n        emit NewStr(node, newStr);\n        nodeStr[node] = newStr;\n    }\n}\n",
+      "file": "StringResolver.sol"
+    },
+    {
+      "name": "AbstractStringResolver.sol",
+      "contents": "pragma solidity ^0.5.11;\n\nimport \"@rsksmart/rns-registry/contracts/AbstractRNS.sol\";\n\ncontract AbstractStringResolver {\n    function str(bytes32 node) external view returns (string memory);\n    function setStr(bytes32 node, string calldata _str) external;\n\n    event NewStr(bytes32 indexed node, string str);\n}\n"
+    },
+    {
+      "name": "AbstractRNS.sol",
+      "contents": "pragma solidity ^0.5.0;\n\ncontract AbstractRNS {\n    function owner(bytes32 node) public view returns(address);\n    function resolver(bytes32 node) public view returns(address);\n    function ttl(bytes32 node) public view returns(uint64);\n    function setOwner(bytes32 node, address ownerAddress) public;\n    function setSubnodeOwner(bytes32 node, bytes32 label, address ownerAddress) public;\n    function setResolver(bytes32 node, address resolverAddress) public;\n    function setTTL(bytes32 node, uint64 ttlValue) public;\n\n    // Logged when the owner of a node assigns a new owner to a subnode.\n    event NewOwner(bytes32 indexed node, bytes32 indexed label, address ownerAddress);\n\n    // Logged when the owner of a node transfers ownership to a new account.\n    event Transfer(bytes32 indexed node, address ownerAddress);\n\n    // Logged when the resolver for a node changes.\n    event NewResolver(bytes32 indexed node, address resolverAddress);\n\n    // Logged when the TTL of a node changes\n    event NewTTL(bytes32 indexed node, uint64 ttlValue);\n}\n"
+    }
+  ],
+  "libraries": {},
+  "creationData": {
+    "blockHash": "0x14fc832b944cac08c383ed60caa8ceededda8525e4af578dbc9f93f78d37db74",
+    "blockNumber": 594339,
+    "transactionHash": "0x9e298fbd7676dfcffcb993e03a80a5fab0ac470c6cace1b1b0b73bb5c3e09fe5",
+    "timestamp": 1581102645
+  },
+  "constructorArguments": [
+    "0x7d284aaac6e925aad802a53c0c69efe3764597b8"
+  ]
+}

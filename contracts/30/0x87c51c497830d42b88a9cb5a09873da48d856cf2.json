@@ -1,0 +1,52 @@
+{
+  "address": "0x87c51c497830d42b88a9cb5a09873da48d856cf2",
+  "net": {
+    "id": "30",
+    "name": "RSK Mainnet"
+  },
+  "name": "StringResolver",
+  "settings": {
+    "optimizer": {
+      "enabled": false,
+      "runs": 200
+    },
+    "outputSelection": {
+      "*": {
+        "*": [
+          "abi",
+          "metadata",
+          "evm.bytecode",
+          "evm.deployedBytecode",
+          "evm.methodIdentifiers"
+        ]
+      }
+    }
+  },
+  "version": "0.5.12+commit.7709ece9",
+  "source": "pragma solidity ^0.5.2;\n\nimport \"../registry/AbstractRNS.sol\";\nimport \"./AbstractStringResolver.sol\";\n\ncontract StringResolver is AbstractStringResolver {\n    AbstractRNS rns;\n\n    mapping(bytes32 => string) strings;\n\n    modifier only_owner(bytes32 node) {\n        require(rns.owner(node) == msg.sender);\n        _;\n    }\n\n    constructor(AbstractRNS rnsAddr) public {\n        rns = rnsAddr;\n    }\n\n    function() payable external {\n        revert();\n    }\n\n    function supportsInterface(bytes4 interfaceID) external pure returns (bool) {\n        return interfaceID == this.str.selector;\n    }\n\n    function str(bytes32 node) external view returns (string memory) {\n        return strings[node];\n    }\n\n    function setStr(bytes32 node, string calldata _string) external only_owner(node) {\n        strings[node] = _string;\n    }\n}\n",
+  "imports": [
+    {
+      "name": "StringResolver.sol",
+      "contents": "pragma solidity ^0.5.2;\n\nimport \"../registry/AbstractRNS.sol\";\nimport \"./AbstractStringResolver.sol\";\n\ncontract StringResolver is AbstractStringResolver {\n    AbstractRNS rns;\n\n    mapping(bytes32 => string) strings;\n\n    modifier only_owner(bytes32 node) {\n        require(rns.owner(node) == msg.sender);\n        _;\n    }\n\n    constructor(AbstractRNS rnsAddr) public {\n        rns = rnsAddr;\n    }\n\n    function() payable external {\n        revert();\n    }\n\n    function supportsInterface(bytes4 interfaceID) external pure returns (bool) {\n        return interfaceID == this.str.selector;\n    }\n\n    function str(bytes32 node) external view returns (string memory) {\n        return strings[node];\n    }\n\n    function setStr(bytes32 node, string calldata _string) external only_owner(node) {\n        strings[node] = _string;\n    }\n}\n",
+      "file": "StringResolver.sol"
+    },
+    {
+      "name": "AbstractStringResolver.sol",
+      "contents": "pragma solidity ^0.5.2;\n\ninterface AbstractStringResolver {\n    function supportsInterface(bytes4 interfaceID) external pure returns (bool);\n    function str(bytes32 node) external view returns (string memory);\n    function setStr(bytes32 node, string calldata _string) external;\n}\n"
+    },
+    {
+      "name": "AbstractRNS.sol",
+      "contents": "pragma solidity ^0.5.2;\n\ncontract AbstractRNS {\n    function owner(bytes32 node) public view returns(address);\n    function resolver(bytes32 node) public view returns(address);\n    function ttl(bytes32 node) public view returns(uint64);\n    function setOwner(bytes32 node, address ownerAddress) public;\n    function setSubnodeOwner(bytes32 node, bytes32 label, address ownerAddress) public;\n    function setResolver(bytes32 node, address resolverAddress) public;\n    function setTTL(bytes32 node, uint64 ttlValue) public;\n\n    // Logged when the owner of a node assigns a new owner to a subnode.\n    event NewOwner(bytes32 indexed node, bytes32 indexed label, address ownerAddress);\n\n    // Logged when the owner of a node transfers ownership to a new account.\n    event Transfer(bytes32 indexed node, address ownerAddress);\n\n    // Logged when the resolver for a node changes.\n    event NewResolver(bytes32 indexed node, address resolverAddress);\n\n    // Logged when the TTL of a node changes\n    event NewTTL(bytes32 indexed node, uint64 ttlValue);\n}\n"
+    }
+  ],
+  "libraries": {},
+  "creationData": {
+    "blockHash": "0x50be595b223d7a4bbbc15dae9d912128fbd50cb01a393a59c2b1bbd2d6cf47a6",
+    "blockNumber": 1945160,
+    "transactionHash": "0x22bc0d9432c18035dc5db8c975109216fdd54cc03d78316634ccd3a1be0cf980",
+    "timestamp": 1576034003
+  },
+  "constructorArguments": [
+    "0xcb868aeabd31e2b66f74e9a55cf064abb31a4ad5"
+  ]
+}

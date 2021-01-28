@@ -1,0 +1,45 @@
+{
+  "address": "0x5a9003e5f443607b7e0491dc27cad6796d309055",
+  "net": {
+    "id": "31",
+    "name": "RSK Testnet"
+  },
+  "name": "PriceOracleAdapterMoc",
+  "settings": {
+    "optimizer": {
+      "enabled": true,
+      "runs": 200
+    },
+    "outputSelection": {
+      "*": {
+        "*": [
+          "abi",
+          "metadata",
+          "evm.bytecode",
+          "evm.deployedBytecode",
+          "evm.methodIdentifiers"
+        ]
+      }
+    }
+  },
+  "version": "0.5.17+commit.d19bba13",
+  "source": "// Dependency file: contracts/PriceOracleAdapter.sol\n\n// pragma solidity ^0.5.16;\n\ncontract PriceOracleAdapter {\n    /// @notice Event adapter interface updated\n    event PriceOracleAdapterUpdated(address oldAddress, address newAddress);\n\n    /**\n     * @notice Get the price\n     * @return The underlying asset price mantissa (scaled by 1e18).\n     *  Zero means the price is unavailable.\n     */\n    function assetPrices(address cTokenAddress) external view returns (uint256);\n}\n\n\n// Root file: contracts/PriceOracleAdapterMoc.sol\n\npragma solidity ^0.5.16;\n\n// import \"contracts/PriceOracleAdapter.sol\";\n\ninterface PriceProviderMoC {\n    function peek() external view returns (bytes32, bool);\n}\n\ncontract PriceOracleAdapterMoc is PriceOracleAdapter {\n    /// @notice Address of the guardian\n    address public guardian;\n    /// @notice The MoC price oracle, which will continue to serve prices\n    PriceProviderMoC public priceProviderMoC;\n    /**\n     * @notice Construct a PriceOracleAdapter for a MoC oracle\n     * @param guardian_ address of guardian that is allowed to manage this contract\n     * @param priceProvider address of asset's MoC price provider\n     */\n    constructor(address guardian_,address priceProvider) public {\n        require(\n            guardian_ != address(0),\n            \"PriceOracleAdapterMoc: guardian could not be 0\"\n        );\n        require(\n            priceProvider != address(0),\n            \"PriceOracleAdapterMoc: priceProvider could not be 0\"\n        );\n        guardian = guardian_;\n        priceProviderMoC = PriceProviderMoC(priceProvider);\n    }\n\n    /**\n     * @notice Get the price from MoC and divide it by the rBTC price\n     * @return The price\n     */\n    function assetPrices(address) public view returns (uint256) {\n        (bytes32 price, bool has) = priceProviderMoC.peek();\n        require(has, \"PriceOracleAdapterMoc: Oracle have no Price\");\n        return uint256(price);\n    }\n\n    /**\n     * @notice Set the address of price provider\n     * @param priceProviderAddress address of price provider\n     */\n    function setPriceProvider(address priceProviderAddress) public {\n        require(\n            msg.sender == guardian,\n            \"PriceOracleAdapterMoc: only guardian may set the address\"\n        );\n        require(\n            priceProviderAddress != address(0),\n            \"PriceOracleAdapterMoc: address could not be 0\"\n        );\n        //set old address\n        address oldPriceProviderAddress = address(priceProviderMoC);\n        //update interface address\n        priceProviderMoC = PriceProviderMoC(priceProviderAddress);\n        //emit event\n        emit PriceOracleAdapterUpdated(\n            oldPriceProviderAddress,\n           priceProviderAddress\n        );\n    }\n}\n",
+  "imports": [
+    {
+      "name": "PriceOracleAdapterMoc.sol",
+      "contents": "// Dependency file: contracts/PriceOracleAdapter.sol\n\n// pragma solidity ^0.5.16;\n\ncontract PriceOracleAdapter {\n    /// @notice Event adapter interface updated\n    event PriceOracleAdapterUpdated(address oldAddress, address newAddress);\n\n    /**\n     * @notice Get the price\n     * @return The underlying asset price mantissa (scaled by 1e18).\n     *  Zero means the price is unavailable.\n     */\n    function assetPrices(address cTokenAddress) external view returns (uint256);\n}\n\n\n// Root file: contracts/PriceOracleAdapterMoc.sol\n\npragma solidity ^0.5.16;\n\n// import \"contracts/PriceOracleAdapter.sol\";\n\ninterface PriceProviderMoC {\n    function peek() external view returns (bytes32, bool);\n}\n\ncontract PriceOracleAdapterMoc is PriceOracleAdapter {\n    /// @notice Address of the guardian\n    address public guardian;\n    /// @notice The MoC price oracle, which will continue to serve prices\n    PriceProviderMoC public priceProviderMoC;\n    /**\n     * @notice Construct a PriceOracleAdapter for a MoC oracle\n     * @param guardian_ address of guardian that is allowed to manage this contract\n     * @param priceProvider address of asset's MoC price provider\n     */\n    constructor(address guardian_,address priceProvider) public {\n        require(\n            guardian_ != address(0),\n            \"PriceOracleAdapterMoc: guardian could not be 0\"\n        );\n        require(\n            priceProvider != address(0),\n            \"PriceOracleAdapterMoc: priceProvider could not be 0\"\n        );\n        guardian = guardian_;\n        priceProviderMoC = PriceProviderMoC(priceProvider);\n    }\n\n    /**\n     * @notice Get the price from MoC and divide it by the rBTC price\n     * @return The price\n     */\n    function assetPrices(address) public view returns (uint256) {\n        (bytes32 price, bool has) = priceProviderMoC.peek();\n        require(has, \"PriceOracleAdapterMoc: Oracle have no Price\");\n        return uint256(price);\n    }\n\n    /**\n     * @notice Set the address of price provider\n     * @param priceProviderAddress address of price provider\n     */\n    function setPriceProvider(address priceProviderAddress) public {\n        require(\n            msg.sender == guardian,\n            \"PriceOracleAdapterMoc: only guardian may set the address\"\n        );\n        require(\n            priceProviderAddress != address(0),\n            \"PriceOracleAdapterMoc: address could not be 0\"\n        );\n        //set old address\n        address oldPriceProviderAddress = address(priceProviderMoC);\n        //update interface address\n        priceProviderMoC = PriceProviderMoC(priceProviderAddress);\n        //emit event\n        emit PriceOracleAdapterUpdated(\n            oldPriceProviderAddress,\n           priceProviderAddress\n        );\n    }\n}\n",
+      "file": "PriceOracleAdapterMoc.sol"
+    }
+  ],
+  "libraries": {},
+  "creationData": {
+    "blockHash": "0x6cfd75442c56182220c4935a98167b81d3e0ca20120b79161bc6022735146450",
+    "blockNumber": 1516317,
+    "transactionHash": "0xe95c38705d7c0c4470f9b21fbea79870fb3a04d5853c9e7347da54e59c75328e",
+    "timestamp": 1610325259
+  },
+  "constructorArguments": [
+    "0x9c95b0ef2d3e1d9ca479524ba738c87be28c1585",
+    "0x9d4b2c05818a0086e641437fcb64ab6098c7bbec"
+  ]
+}

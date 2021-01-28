@@ -1,0 +1,30 @@
+{
+  "address": "0x888c4d4e918b6a95e5eebc2b74ee4ae4d77866c3",
+  "net": {
+    "id": "30",
+    "name": "RSK Mainnet"
+  },
+  "name": "Migrations",
+  "settings": {
+    "optimizer": {
+      "enabled": false,
+      "runs": 200
+    }
+  },
+  "version": "0.5.16+commit.9c3226ce",
+  "source": "pragma solidity ^0.5.0;\n\ncontract Migrations {\n    address public owner;\n    uint public last_completed_migration;\n\n    constructor() public {\n        owner = msg.sender;\n    }\n\n    modifier restricted() {\n        if (msg.sender == owner) _;\n    }\n\n    function setCompleted(uint completed) public restricted {\n        last_completed_migration = completed;\n    }\n\n    function upgrade(address new_address) public restricted {\n        Migrations upgraded = Migrations(new_address);\n        upgraded.setCompleted(last_completed_migration);\n    }\n}\n",
+  "imports": [
+    {
+      "name": "Migrations.sol",
+      "contents": "pragma solidity ^0.5.0;\n\ncontract Migrations {\n    address public owner;\n    uint public last_completed_migration;\n\n    constructor() public {\n        owner = msg.sender;\n    }\n\n    modifier restricted() {\n        if (msg.sender == owner) _;\n    }\n\n    function setCompleted(uint completed) public restricted {\n        last_completed_migration = completed;\n    }\n\n    function upgrade(address new_address) public restricted {\n        Migrations upgraded = Migrations(new_address);\n        upgraded.setCompleted(last_completed_migration);\n    }\n}\n",
+      "file": "Migrations.sol"
+    }
+  ],
+  "libraries": {},
+  "creationData": {
+    "blockHash": "0x3ffe247db0ae860e6d30a90a881ccaad41a9905aeec7b3d7088b4f6de940fa40",
+    "blockNumber": 2406876,
+    "transactionHash": "0x82434e28a0a4b166231d5f088076e41f367d80fbf961accd73ac6d5f82dab04a",
+    "timestamp": 1591040847
+  }
+}

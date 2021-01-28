@@ -1,0 +1,30 @@
+{
+  "address": "0xcacb88a1f4cdc9116df5e200bd330bf2c5ef9d29",
+  "net": {
+    "id": "31",
+    "name": "RSK Testnet"
+  },
+  "name": "SimpleStorage",
+  "settings": {
+    "optimizer": {
+      "enabled": false,
+      "runs": 200
+    }
+  },
+  "version": "0.5.8+commit.23d335f2",
+  "source": "pragma solidity >=0.4.0 <0.7.0;\n\ncontract SimpleStorage {\n    uint storedData;\n\n    function set(uint x) public {\n        storedData = x;\n    }\n\n    function get() public view returns (uint) {\n        return storedData;\n    }\n}",
+  "imports": [
+    {
+      "name": "SimpleStorage.sol",
+      "contents": "pragma solidity >=0.4.0 <0.7.0;\n\ncontract SimpleStorage {\n    uint storedData;\n\n    function set(uint x) public {\n        storedData = x;\n    }\n\n    function get() public view returns (uint) {\n        return storedData;\n    }\n}",
+      "file": "SimpleStorage.sol"
+    }
+  ],
+  "libraries": {},
+  "creationData": {
+    "blockHash": "0xeda17099176487acefec65ed326ff3dd589ed8762484d253458943eb65a0dcba",
+    "blockNumber": 547179,
+    "transactionHash": "0xf198b65a4139c61c1d41018bed58d381896dfcda7a58b436036a6120c74e8197",
+    "timestamp": 1579547376
+  }
+}

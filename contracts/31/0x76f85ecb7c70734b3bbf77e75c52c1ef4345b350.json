@@ -1,0 +1,30 @@
+{
+  "address": "0x76f85ecb7c70734b3bbf77e75c52c1ef4345b350",
+  "net": {
+    "id": "31",
+    "name": "RSK Testnet"
+  },
+  "name": "testContractBank",
+  "settings": {
+    "optimizer": {
+      "enabled": false,
+      "runs": 200
+    }
+  },
+  "version": "0.4.25+commit.59dbf8f1",
+  "source": "pragma solidity 0.4.25;\n\ncontract testContractBank\n{\n    int bal=0;\n    \n    constructor() public\n    {\n        bal=1;\n    }\n    \n    function getBalance() view public returns(int)\n    {\n        return bal;\n    }\n    \n    function deposit(int amt) public\n    {\n        bal=bal+amt;\n    }\n    \n    function withdraw(int amt) public\n    {\n        bal=bal-amt;\n    }\n}",
+  "imports": [
+    {
+      "name": "testTronContractBank.sol",
+      "contents": "pragma solidity 0.4.25;\n\ncontract testContractBank\n{\n    int bal=0;\n    \n    constructor() public\n    {\n        bal=1;\n    }\n    \n    function getBalance() view public returns(int)\n    {\n        return bal;\n    }\n    \n    function deposit(int amt) public\n    {\n        bal=bal+amt;\n    }\n    \n    function withdraw(int amt) public\n    {\n        bal=bal-amt;\n    }\n}",
+      "file": "testTronContractBank.sol"
+    }
+  ],
+  "libraries": {},
+  "creationData": {
+    "blockHash": "0xac97c556d1463f424fc5b9107785c8306dfe8210b04c7531f0b9fbc888a5a97b",
+    "blockNumber": 1168545,
+    "transactionHash": "0x94826a1c66e0b4d940f8eed1fc2d5aa3b883ea944b117c38ec3d55cfbfbb7de3",
+    "timestamp": 1599814401
+  }
+}
