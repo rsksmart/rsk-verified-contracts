@@ -1,0 +1,39 @@
+{
+    "address": "0xf3720b012e727f9536ad723a266b14853e61d500",
+    "net": {
+        "id": "30",
+        "name": "RSK Mainnet"
+    },
+    "name": "ResolverMigrator",
+    "settings": {
+        "optimizer": {
+            "enabled": false,
+            "runs": 200
+        }
+    },
+    "version": "0.5.16+commit.9c3226ce",
+    "source": "// SPDX-License-Identifier: MIT\npragma solidity >=0.4.22 <0.9.0;\n\nimport \"./RNS.sol\";\n\ncontract ResolverMigrator {\n  RNS public rns;\n  address public registrar;\n  address public newResolver;\n\n  bytes32 constant rskZone = 0x0cd5c10192478cd220936e91293afc15e3f6de4d419de5de7506b679cbdd8ec4;\n\n  constructor(RNS _rns, address _registrar, address _newResolver) public {\n    rns = _rns;\n    registrar = _registrar;\n    newResolver = _newResolver;\n  }\n\n  function run() external {\n    rns.setResolver(rskZone, newResolver);\n    rns.setOwner(rskZone, registrar);\n\n    assert(rns.owner(rskZone) == registrar);\n    assert(rns.resolver(rskZone) == newResolver);\n\n    selfdestruct(msg.sender);\n  }\n}\n",
+    "imports": [
+        {
+            "name": "ResolverMigrator.sol",
+            "contents": "// SPDX-License-Identifier: MIT\npragma solidity >=0.4.22 <0.9.0;\n\nimport \"./RNS.sol\";\n\ncontract ResolverMigrator {\n  RNS public rns;\n  address public registrar;\n  address public newResolver;\n\n  bytes32 constant rskZone = 0x0cd5c10192478cd220936e91293afc15e3f6de4d419de5de7506b679cbdd8ec4;\n\n  constructor(RNS _rns, address _registrar, address _newResolver) public {\n    rns = _rns;\n    registrar = _registrar;\n    newResolver = _newResolver;\n  }\n\n  function run() external {\n    rns.setResolver(rskZone, newResolver);\n    rns.setOwner(rskZone, registrar);\n\n    assert(rns.owner(rskZone) == registrar);\n    assert(rns.resolver(rskZone) == newResolver);\n\n    selfdestruct(msg.sender);\n  }\n}\n",
+            "file": "ResolverMigrator.sol"
+        },
+        {
+            "name": "RNS.sol",
+            "contents": "// SPDX-License-Identifier: MIT\npragma solidity >=0.4.22 <0.9.0;\n\ncontract RNS {\n    // Logged when the owner of a node assigns a new owner to a subnode.\n    event NewOwner(bytes32 indexed node, bytes32 indexed label, address ownerAddress);\n\n    // Logged when the owner of a node transfers ownership to a new account.\n    event Transfer(bytes32 indexed node, address ownerAddress);\n\n    // Logged when the resolver for a node changes.\n    event NewResolver(bytes32 indexed node, address resolverAddress);\n\n    // Logged when the TTL of a node changes\n    event NewTTL(bytes32 indexed node, uint64 ttlValue);\n\n    struct Record {\n        address owner;\n        address resolver;\n        uint64 ttl;\n    }\n\n    mapping(bytes32=>Record) records;\n\n    modifier only_owner(bytes32 node) {\n        require(records[node].owner == msg.sender);\n        _;\n    }\n\n    constructor() public {\n        records[bytes32(0)].owner = msg.sender;\n    }\n\n    /// @notice Returns the current owner of a domain.\n    /// @param node namehash of the domain.\n    /// @return The owner of the domain.\n    function owner(bytes32 node) public view returns (address) {\n        return records[node].owner;\n    }\n\n    /// @notice Returns the current resolver of a domain.\n    /// @param node namehash of the domain.\n    /// @return The resolver of the domain.\n    function resolver(bytes32 node) public view returns (address) {\n        return records[node].resolver;\n    }\n\n    /// @notice Returns the time to live of a domain and any records\n    /// associated with it.\n    /// @param node namehash of the domain.\n    /// @return The ttl of the domain.\n    function ttl(bytes32 node) public view returns (uint64) {\n        return records[node].ttl;\n    }\n\n    /// @notice Transfers ownership of a domain.\n    /// @dev Only owner of the node.\n    /// @param node namehash of the domain to transfer ownership of.\n    /// @param ownerAddress The new owner.\n    function setOwner(bytes32 node, address ownerAddress) public only_owner(node) {\n        emit Transfer(node, ownerAddress);\n        records[node].owner = ownerAddress;\n    }\n\n    /// @notice Transfers ownership of label.node subdomain.\n    /// @dev Only owner of the parent domain.\n    /// @param node namehash of the parent domain.\n    /// @param label keccak256 of the label specifying the subnode.\n    /// @param ownerAddress The new owner.\n    function setSubnodeOwner(bytes32 node, bytes32 label, address ownerAddress) public only_owner(node) {\n        bytes32 subnode = keccak256(abi.encodePacked(node, label));\n        emit NewOwner(node, label, ownerAddress);\n        records[subnode].owner = ownerAddress;\n\n        emit NewResolver(subnode, records[node].resolver);\n        records[subnode].resolver = records[node].resolver;\n    }\n\n    /// @notice Sets the resolver of a given node.\n    /// @dev Only owner of the node.\n    /// @param node namehash of the domain to set the resolver of.\n    /// @param resolverAddress The new resolver.\n    function setResolver(bytes32 node, address resolverAddress) public only_owner(node) {\n        emit NewResolver(node, resolverAddress);\n        records[node].resolver = resolverAddress;\n    }\n\n    /// @notice Sets the time to live of a given node.\n    /// @dev Only owner of the node.\n    /// @param node namehash of the domain to set the ttl of.\n    /// @param ttlValue The new ttl.\n    function setTTL(bytes32 node, uint64 ttlValue) public only_owner(node) {\n        emit NewTTL(node, ttlValue);\n        records[node].ttl = ttlValue;\n    }\n\n    /// @notice Sets the root node resolver.\n    /// @dev Only owner of the root node.\n    /// @param _resolver The new resolver.\n    function setDefaultResolver(address _resolver) public only_owner(0) {\n        records[bytes32(0)].resolver = _resolver;\n    }\n}\n"
+        }
+    ],
+    "libraries": {},
+    "constructorArguments": [
+        "0xcb868aeabd31e2b66f74e9a55cf064abb31a4ad5",
+        "0x45d3e4fb311982a06ba52359d44cb4f5980e0ef1",
+        "0xd87f8121d44f3717d4badc50b24e50044f86d64b"
+    ],
+    "creationData": {
+        "blockHash": "0xc44efd49d16687397b8d1c74c9cdf7b887562d457d79079af993503152101b37",
+        "blockNumber": 3170375,
+        "transactionHash": "0xeddbcc363f836e8aa8067c0e207bfd2508f88a3c6532fc26cba2cdc05aeef0dd",
+        "timestamp": 1615317202
+    }
+}

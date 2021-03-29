@@ -1,0 +1,42 @@
+{
+    "address": "0x05f4f068df59a5aa7911f57ce4f41ebfbcb8e247",
+    "net": {
+        "id": "30",
+        "name": "RSK Mainnet"
+    },
+    "name": "GovernorVault",
+    "settings": {
+        "optimizer": {
+            "enabled": true,
+            "runs": 200
+        }
+    },
+    "version": "0.5.17+commit.d19bba13",
+    "source": "pragma solidity ^0.5.17;\n\nimport \"../openzeppelin/Ownable.sol\";\nimport \"../interfaces/IERC20.sol\";\n\ncontract GovernorVault is Ownable {\n\tevent Deposited(address indexed sender, uint256 amount);\n\tevent TokensTransferred(address indexed receiver, address indexed token, uint256 amount);\n\tevent RbtcTransferred(address indexed receiver, uint256 amount);\n\n\t/**\n\t * @notice transfers tokens\n\t * @param _receiver the receiver of tokens\n\t * @param _token the address of token contract\n\t * @param _amount the to be transferred\n\t */\n\tfunction transferTokens(\n\t\taddress _receiver,\n\t\taddress _token,\n\t\tuint256 _amount\n\t) public onlyOwner {\n\t\trequire(_receiver != address(0), \"Invalid receiver address\");\n\t\trequire(_token != address(0), \"Invalid token address\");\n\n\t\trequire(IERC20(_token).transfer(_receiver, _amount), \"Transfer failed\");\n\t\temit TokensTransferred(_receiver, _token, _amount);\n\t}\n\n\t/**\n\t * @notice transfers RBTC\n\t * @param _receiver the receiver of RBTC\n\t * @param _amount the to be transferred\n\t */\n\tfunction transferRbtc(address payable _receiver, uint256 _amount) public onlyOwner {\n\t\trequire(_receiver != address(0), \"Invalid receiver address\");\n\n\t\taddress(_receiver).transfer(_amount);\n\t\temit RbtcTransferred(_receiver, _amount);\n\t}\n\n\tfunction() external payable {\n\t\tif (msg.value > 0) {\n\t\t\temit Deposited(msg.sender, msg.value);\n\t\t}\n\t}\n}\n",
+    "imports": [
+        {
+            "name": "GovernorVault.sol",
+            "contents": "pragma solidity ^0.5.17;\n\nimport \"../openzeppelin/Ownable.sol\";\nimport \"../interfaces/IERC20.sol\";\n\ncontract GovernorVault is Ownable {\n\tevent Deposited(address indexed sender, uint256 amount);\n\tevent TokensTransferred(address indexed receiver, address indexed token, uint256 amount);\n\tevent RbtcTransferred(address indexed receiver, uint256 amount);\n\n\t/**\n\t * @notice transfers tokens\n\t * @param _receiver the receiver of tokens\n\t * @param _token the address of token contract\n\t * @param _amount the to be transferred\n\t */\n\tfunction transferTokens(\n\t\taddress _receiver,\n\t\taddress _token,\n\t\tuint256 _amount\n\t) public onlyOwner {\n\t\trequire(_receiver != address(0), \"Invalid receiver address\");\n\t\trequire(_token != address(0), \"Invalid token address\");\n\n\t\trequire(IERC20(_token).transfer(_receiver, _amount), \"Transfer failed\");\n\t\temit TokensTransferred(_receiver, _token, _amount);\n\t}\n\n\t/**\n\t * @notice transfers RBTC\n\t * @param _receiver the receiver of RBTC\n\t * @param _amount the to be transferred\n\t */\n\tfunction transferRbtc(address payable _receiver, uint256 _amount) public onlyOwner {\n\t\trequire(_receiver != address(0), \"Invalid receiver address\");\n\n\t\taddress(_receiver).transfer(_amount);\n\t\temit RbtcTransferred(_receiver, _amount);\n\t}\n\n\tfunction() external payable {\n\t\tif (msg.value > 0) {\n\t\t\temit Deposited(msg.sender, msg.value);\n\t\t}\n\t}\n}\n",
+            "file": "GovernorVault.sol"
+        },
+        {
+            "name": "Ownable.sol",
+            "contents": "pragma solidity >=0.5.0 <0.6.0;\n\nimport \"./Context.sol\";\n\n/**\n * @dev Contract module which provides a basic access control mechanism, where\n * there is an account (an owner) that can be granted exclusive access to\n * specific functions.\n *\n * This module is used through inheritance. It will make available the modifier\n * `onlyOwner`, which can be applied to your functions to restrict their use to\n * the owner.\n */\ncontract Ownable is Context {\n\taddress private _owner;\n\n\tevent OwnershipTransferred(address indexed previousOwner, address indexed newOwner);\n\n\t/**\n\t * @dev Initializes the contract setting the deployer as the initial owner.\n\t */\n\tconstructor() internal {\n\t\taddress msgSender = _msgSender();\n\t\t_owner = msgSender;\n\t\temit OwnershipTransferred(address(0), msgSender);\n\t}\n\n\t/**\n\t * @dev Returns the address of the current owner.\n\t */\n\tfunction owner() public view returns (address) {\n\t\treturn _owner;\n\t}\n\n\t/**\n\t * @dev Throws if called by any account other than the owner.\n\t */\n\tmodifier onlyOwner() {\n\t\trequire(isOwner(), \"unauthorized\");\n\t\t_;\n\t}\n\n\t/**\n\t * @dev Returns true if the caller is the current owner.\n\t */\n\tfunction isOwner() public view returns (bool) {\n\t\treturn _msgSender() == _owner;\n\t}\n\n\t/**\n\t * @dev Transfers ownership of the contract to a new account (`newOwner`).\n\t * Can only be called by the current owner.\n\t */\n\tfunction transferOwnership(address newOwner) public onlyOwner {\n\t\t_transferOwnership(newOwner);\n\t}\n\n\t/**\n\t * @dev Transfers ownership of the contract to a new account (`newOwner`).\n\t */\n\tfunction _transferOwnership(address newOwner) internal {\n\t\trequire(newOwner != address(0), \"Ownable: new owner is the zero address\");\n\t\temit OwnershipTransferred(_owner, newOwner);\n\t\t_owner = newOwner;\n\t}\n}\n"
+        },
+        {
+            "name": "IERC20.sol",
+            "contents": "/**\n * Copyright 2017-2020, bZeroX, LLC. All Rights Reserved.\n * Licensed under the Apache License, Version 2.0.\n */\n\npragma solidity >=0.5.0 <0.6.0;\n\ncontract IERC20 {\n\tstring public name;\n\tuint8 public decimals;\n\tstring public symbol;\n\n\tfunction totalSupply() public view returns (uint256);\n\n\tfunction balanceOf(address _who) public view returns (uint256);\n\n\tfunction transfer(address _to, uint256 _value) public returns (bool);\n\n\tfunction allowance(address _owner, address _spender) public view returns (uint256);\n\n\tfunction transferFrom(\n\t\taddress _from,\n\t\taddress _to,\n\t\tuint256 _value\n\t) public returns (bool);\n\n\tfunction approve(address _spender, uint256 _value) public returns (bool);\n\n\tevent Transfer(address indexed from, address indexed to, uint256 value);\n\tevent Approval(address indexed owner, address indexed spender, uint256 value);\n}\n"
+        },
+        {
+            "name": "Context.sol",
+            "contents": "pragma solidity >=0.5.0 <0.6.0;\n\n/*\n * @dev Provides information about the current execution context, including the\n * sender of the transaction and its data. While these are generally available\n * via msg.sender and msg.data, they should not be accessed in such a direct\n * manner, since when dealing with GSN meta-transactions the account sending and\n * paying for execution may not be the actual sender (as far as an application\n * is concerned).\n *\n * This contract is only required for intermediate, library-like contracts.\n */\ncontract Context {\n\t// Empty internal constructor, to prevent people from mistakenly deploying\n\t// an instance of this contract, which should be used via inheritance.\n\tconstructor() internal {}\n\n\t// solhint-disable-previous-line no-empty-blocks\n\n\tfunction _msgSender() internal view returns (address payable) {\n\t\treturn msg.sender;\n\t}\n\n\tfunction _msgData() internal view returns (bytes memory) {\n\t\tthis; // silence state mutability warning without generating bytecode - see https://github.com/ethereum/solidity/issues/2691\n\t\treturn msg.data;\n\t}\n}\n"
+        }
+    ],
+    "libraries": {},
+    "creationData": {
+        "blockHash": "0xa5fa1de3c5869d592f2b9e1b2315c1be233719307aa9e026b4c59242d213b1d0",
+        "blockNumber": 3100272,
+        "transactionHash": "0x4f3fa2118625af9135757666a0ccbf7c6419f9f3adfa90b1ca3e80961812be07",
+        "timestamp": 1613125980
+    }
+}
