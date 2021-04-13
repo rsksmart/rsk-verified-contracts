@@ -1,0 +1,30 @@
+{
+    "address": "0x9f24a0bdbaa5dba945829c7aeefaf4d1cef8158f",
+    "net": {
+        "id": "31",
+        "name": "RSK Testnet"
+    },
+    "name": "Forwarder",
+    "settings": {
+        "optimizer": {
+            "enabled": false,
+            "runs": 200
+        }
+    },
+    "version": "0.8.1+commit.df193b15",
+    "source": "// SPDX-License-Identifier: MIT\npragma solidity >=0.4.22 <0.9.0;\n\ncontract Forwarder {\n  struct Metatransaction {\n    address to;\n    bytes data;\n    uint gas;\n    uint value;\n    bool executed;\n  }\n\n  Metatransaction[] private bag;\n\n  event MetatransactionAdded(uint indexed index, address to, bytes data, uint gas, uint value);\n  event MetatransactionExecuted(uint indexed index, bytes result);\n\n  function add(address to, bytes memory data, uint gas) public payable {\n    bag.push(Metatransaction(to, data, gas, msg.value, false));\n    emit MetatransactionAdded(bag.length - 1, to, data, gas, msg.value);\n  }\n\n  function at(uint index) public view returns(address, bytes memory, uint, uint, bool) {\n    Metatransaction memory metatransaction = bag[index];\n    return (metatransaction.to, metatransaction.data, metatransaction.gas, metatransaction.value, metatransaction.executed);\n  }\n\n  function execute(uint index) public {\n    Metatransaction storage metatransaction = bag[index];\n\n    require(!metatransaction.executed, \"Already executed\");\n\n    (bool success, bytes memory result) = metatransaction.to.call{ gas: metatransaction.gas, value: metatransaction.value }(metatransaction.data);\n\n    require(success, string(result));\n\n    metatransaction.executed = true;\n\n    emit MetatransactionExecuted(index, result);\n  }\n}\n",
+    "imports": [
+        {
+            "name": "Forwarder.sol",
+            "contents": "// SPDX-License-Identifier: MIT\npragma solidity >=0.4.22 <0.9.0;\n\ncontract Forwarder {\n  struct Metatransaction {\n    address to;\n    bytes data;\n    uint gas;\n    uint value;\n    bool executed;\n  }\n\n  Metatransaction[] private bag;\n\n  event MetatransactionAdded(uint indexed index, address to, bytes data, uint gas, uint value);\n  event MetatransactionExecuted(uint indexed index, bytes result);\n\n  function add(address to, bytes memory data, uint gas) public payable {\n    bag.push(Metatransaction(to, data, gas, msg.value, false));\n    emit MetatransactionAdded(bag.length - 1, to, data, gas, msg.value);\n  }\n\n  function at(uint index) public view returns(address, bytes memory, uint, uint, bool) {\n    Metatransaction memory metatransaction = bag[index];\n    return (metatransaction.to, metatransaction.data, metatransaction.gas, metatransaction.value, metatransaction.executed);\n  }\n\n  function execute(uint index) public {\n    Metatransaction storage metatransaction = bag[index];\n\n    require(!metatransaction.executed, \"Already executed\");\n\n    (bool success, bytes memory result) = metatransaction.to.call{ gas: metatransaction.gas, value: metatransaction.value }(metatransaction.data);\n\n    require(success, string(result));\n\n    metatransaction.executed = true;\n\n    emit MetatransactionExecuted(index, result);\n  }\n}\n",
+            "file": "Forwarder.sol"
+        }
+    ],
+    "libraries": {},
+    "creationData": {
+        "blockHash": "0x5cd0352ef5e4f6e625f05474009e685af9cb06a972810a3a197a14e49d60ed99",
+        "blockNumber": 1751255,
+        "transactionHash": "0xa6789af51d7ae1f0b1a4a5c1ed01c0af38bdab77928f6affde7511d1036497e2",
+        "timestamp": 1617988198
+    }
+}

@@ -1,0 +1,30 @@
+{
+    "address": "0x3f21ab1add7f85aa7bf479c64c0c603183e8a7a2",
+    "net": {
+        "id": "31",
+        "name": "RSK Testnet"
+    },
+    "name": "Counter",
+    "settings": {
+        "optimizer": {
+            "enabled": false,
+            "runs": 200
+        }
+    },
+    "version": "0.8.1+commit.df193b15",
+    "source": "// SPDX-License-Identifier: MIT\npragma solidity >=0.4.22 <0.9.0;\n\ncontract Counter {\n  uint public count = 0;\n\n  function inc() public payable {\n    count += count + 1;\n  }\n}\n",
+    "imports": [
+        {
+            "name": "Counter.sol",
+            "contents": "// SPDX-License-Identifier: MIT\npragma solidity >=0.4.22 <0.9.0;\n\ncontract Counter {\n  uint public count = 0;\n\n  function inc() public payable {\n    count += count + 1;\n  }\n}\n",
+            "file": "Counter.sol"
+        }
+    ],
+    "libraries": {},
+    "creationData": {
+        "blockHash": "0xa59b176ef13764a442eddb741604b58955465840cb17cca10ff6d78b4d9b5e4c",
+        "blockNumber": 1751254,
+        "transactionHash": "0x1abca391cd4e75ac30533c101feca126f5d74de5899b8abe2236e79474d0ca43",
+        "timestamp": 1617988172
+    }
+}

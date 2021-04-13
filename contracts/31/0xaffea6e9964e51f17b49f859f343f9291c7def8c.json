@@ -1,0 +1,30 @@
+{
+    "address": "0xaffea6e9964e51f17b49f859f343f9291c7def8c",
+    "net": {
+        "id": "31",
+        "name": "RSK Testnet"
+    },
+    "name": "Name",
+    "settings": {
+        "optimizer": {
+            "enabled": false,
+            "runs": 200
+        }
+    },
+    "version": "0.8.1+commit.df193b15",
+    "source": "// SPDX-License-Identifier: MIT\r\npragma solidity 0.8.1;\r\n\r\ncontract Name {\r\n    string private name;\r\n    address public owner;\r\n\r\n    constructor() {\r\n        owner = msg.sender;\r\n        name = \"Sol\";\r\n    }\r\n\r\n    function getName() public view returns (string memory) {\r\n        return name;\r\n    }\r\n}",
+    "imports": [
+        {
+            "name": "Name.sol",
+            "contents": "// SPDX-License-Identifier: MIT\r\npragma solidity 0.8.1;\r\n\r\ncontract Name {\r\n    string private name;\r\n    address public owner;\r\n\r\n    constructor() {\r\n        owner = msg.sender;\r\n        name = \"Sol\";\r\n    }\r\n\r\n    function getName() public view returns (string memory) {\r\n        return name;\r\n    }\r\n}",
+            "file": "Name.sol"
+        }
+    ],
+    "libraries": {},
+    "creationData": {
+        "blockHash": "0x228d6a8c8fa470345740a06facb60f8688a8b18f1177b67d3a7d3a346b5e525d",
+        "blockNumber": 1725849,
+        "transactionHash": "0x44e3b73d0cf37c7ed152b0b370f422255f39266813e3526f0661e747c7f848f4",
+        "timestamp": 1617133912
+    }
+}

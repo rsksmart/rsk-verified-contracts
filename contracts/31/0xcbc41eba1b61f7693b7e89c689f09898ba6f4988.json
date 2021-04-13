@@ -1,0 +1,30 @@
+{
+    "address": "0xcbc41eba1b61f7693b7e89c689f09898ba6f4988",
+    "net": {
+        "id": "31",
+        "name": "RSK Testnet"
+    },
+    "name": "SimpleStorage",
+    "settings": {
+        "optimizer": {
+            "enabled": false,
+            "runs": 200
+        }
+    },
+    "version": "0.8.1+commit.df193b15",
+    "source": "pragma solidity >=0.7.0 <0.9.0;\ncontract SimpleStorage {\n    uint storedData;\n\n    function set(uint x) public {\n        storedData = x;\n    }\n\n    function get() public view returns (uint) {\n        return storedData;\n    }\n}\n",
+    "imports": [
+        {
+            "name": "SimpleStorage -  oguz_deneme.sol",
+            "contents": "pragma solidity >=0.7.0 <0.9.0;\ncontract SimpleStorage {\n    uint storedData;\n\n    function set(uint x) public {\n        storedData = x;\n    }\n\n    function get() public view returns (uint) {\n        return storedData;\n    }\n}\n",
+            "file": "SimpleStorage -  oguz_deneme.sol"
+        }
+    ],
+    "libraries": {},
+    "creationData": {
+        "blockHash": "0x5d9f2360520491271b7fbf73d9acaa46d61cac125d2b690246b1f7e921c240b8",
+        "blockNumber": 1758672,
+        "transactionHash": "0x5b658c2c48b0d2a45b97351946797224b59866b0538abea2e851d038b537fa0a",
+        "timestamp": 1618231700
+    }
+}
