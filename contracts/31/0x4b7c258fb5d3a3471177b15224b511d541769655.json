@@ -1,0 +1,30 @@
+{
+    "address": "0x4b7c258fb5d3a3471177b15224b511d541769655",
+    "net": {
+        "id": "31",
+        "name": "RSK Testnet"
+    },
+    "name": "EscribirEnLaBlockchain",
+    "settings": {
+        "optimizer": {
+            "enabled": false,
+            "runs": 200
+        }
+    },
+    "version": "0.7.6+commit.7338295f",
+    "source": "// SPDX-License-Identifier: MIT\n\npragma solidity >=0.7.0 <0.8.0;\n\ncontract EscribirEnLaBlockchain{\n    \n    string texto;\n    \n    function Escribir(string calldata _texto) external {\n        \n        texto = _texto;\n        \n    }\n    \n    function Leer() external view returns(string memory) {\n        \n        return texto;\n        \n    }\n    \n}\n",
+    "imports": [
+        {
+            "name": "EscribirEnLaBlockchain.sol",
+            "contents": "// SPDX-License-Identifier: MIT\n\npragma solidity >=0.7.0 <0.8.0;\n\ncontract EscribirEnLaBlockchain{\n    \n    string texto;\n    \n    function Escribir(string calldata _texto) external {\n        \n        texto = _texto;\n        \n    }\n    \n    function Leer() external view returns(string memory) {\n        \n        return texto;\n        \n    }\n    \n}\n",
+            "file": "EscribirEnLaBlockchain.sol"
+        }
+    ],
+    "libraries": {},
+    "creationData": {
+        "blockHash": "0xe8f65b2e755979eda389c43dab56c44ca66fb89edbc9c5c93765eca3f5d34512",
+        "blockNumber": 1795440,
+        "transactionHash": "0x8d85716c42f9a4c937fd010d5beea7422c7a08ad5603cae75f1cd0d30833b2ea",
+        "timestamp": 1619441308
+    }
+}

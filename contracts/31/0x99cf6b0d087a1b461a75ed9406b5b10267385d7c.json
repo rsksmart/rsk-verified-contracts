@@ -1,0 +1,30 @@
+{
+    "address": "0x99cf6b0d087a1b461a75ed9406b5b10267385d7c",
+    "net": {
+        "id": "31",
+        "name": "RSK Testnet"
+    },
+    "name": "Revaha_Goksin",
+    "settings": {
+        "optimizer": {
+            "enabled": false,
+            "runs": 200
+        }
+    },
+    "version": "0.8.1+commit.df193b15",
+    "source": "// SPDX-License-Identifier: MIT\r\npragma solidity >=0.7.0 <0.9.0;\r\n\r\ncontract Revaha_Goksin {\r\n    uint storedData;\r\n\r\n    function set(uint x) public {\r\n        storedData = x;\r\n    }\r\n\r\n    function get() public view returns (uint) {\r\n        return storedData;\r\n    }\r\n}",
+    "imports": [
+        {
+            "name": "Revaha_Goksin.sol",
+            "contents": "// SPDX-License-Identifier: MIT\r\npragma solidity >=0.7.0 <0.9.0;\r\n\r\ncontract Revaha_Goksin {\r\n    uint storedData;\r\n\r\n    function set(uint x) public {\r\n        storedData = x;\r\n    }\r\n\r\n    function get() public view returns (uint) {\r\n        return storedData;\r\n    }\r\n}",
+            "file": "Revaha_Goksin.sol"
+        }
+    ],
+    "libraries": {},
+    "creationData": {
+        "blockHash": "0x7a6066401952012acfd43c530b527a8d89ecdd4927a544dcc659633646af62ca",
+        "blockNumber": 1788430,
+        "transactionHash": "0xa661be145c9bfc1c075202f9d17243fadc8ca2faecb4546db496f47764e818cd",
+        "timestamp": 1619209060
+    }
+}

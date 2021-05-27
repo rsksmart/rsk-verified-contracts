@@ -1,0 +1,30 @@
+{
+    "address": "0x661a7b62a41cf373c22cffef8b9cfc35fa54313a",
+    "net": {
+        "id": "31",
+        "name": "RSK Testnet"
+    },
+    "name": "Name",
+    "settings": {
+        "optimizer": {
+            "enabled": false,
+            "runs": 200
+        }
+    },
+    "version": "0.8.1+commit.df193b15",
+    "source": "// SPDX-License-Identifier: MIT\r\npragma solidity 0.8.1;\r\n\r\ncontract Name {\r\n    string private name;\r\n    address public owner;\r\n\r\n    constructor() {\r\n        owner = msg.sender;\r\n        name = \"We Trust Digital\";\r\n    }\r\n\r\n    function getName() public view returns (string memory) {\r\n        return name;\r\n    }\r\n}",
+    "imports": [
+        {
+            "name": "wdt.sol",
+            "contents": "// SPDX-License-Identifier: MIT\r\npragma solidity 0.8.1;\r\n\r\ncontract Name {\r\n    string private name;\r\n    address public owner;\r\n\r\n    constructor() {\r\n        owner = msg.sender;\r\n        name = \"We Trust Digital\";\r\n    }\r\n\r\n    function getName() public view returns (string memory) {\r\n        return name;\r\n    }\r\n}",
+            "file": "wdt.sol"
+        }
+    ],
+    "libraries": {},
+    "creationData": {
+        "blockHash": "0x3ed816f01bf24b5d9ea88de80948637a40e3956515f2e0146a82cb5ffb085abb",
+        "blockNumber": 1778281,
+        "transactionHash": "0x2446fec50480c07649119e7dbc5d665a90791abcccc7adc39d15bea563e4ab6b",
+        "timestamp": 1618875389
+    }
+}

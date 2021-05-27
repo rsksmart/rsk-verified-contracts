@@ -1,0 +1,30 @@
+{
+    "address": "0x50e5fb60d74d18442a03a0aec151b9084ae3fc7d",
+    "net": {
+        "id": "31",
+        "name": "RSK Testnet"
+    },
+    "name": "ornekcontract1",
+    "settings": {
+        "optimizer": {
+            "enabled": false,
+            "runs": 200
+        }
+    },
+    "version": "0.8.3+commit.8d00100c",
+    "source": "pragma solidity >=0.7.0 <0.9.0;\r\n\r\ncontract ornekcontract1 {\r\n    uint storedData;\r\n\r\n    function set(uint x) public {\r\n        storedData = x;\r\n    }\r\n\r\n    function get() public view returns (uint) {\r\n        return storedData;\r\n    }\r\n}",
+    "imports": [
+        {
+            "name": "ornekcontract1.sol",
+            "contents": "pragma solidity >=0.7.0 <0.9.0;\r\n\r\ncontract ornekcontract1 {\r\n    uint storedData;\r\n\r\n    function set(uint x) public {\r\n        storedData = x;\r\n    }\r\n\r\n    function get() public view returns (uint) {\r\n        return storedData;\r\n    }\r\n}",
+            "file": "ornekcontract1.sol"
+        }
+    ],
+    "libraries": {},
+    "creationData": {
+        "blockHash": "0xd90449713c389e78a1f5f2014ec0602eb198475df2df8a391105705807a612c5",
+        "blockNumber": 1782968,
+        "transactionHash": "0x30010b8dac7e15e55fb84f5338a96b5fd111ba96e8b9edc920615e8fcd7298b5",
+        "timestamp": 1619028465
+    }
+}

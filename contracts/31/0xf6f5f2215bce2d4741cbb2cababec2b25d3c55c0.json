@@ -1,0 +1,30 @@
+{
+    "address": "0xf6f5f2215bce2d4741cbb2cababec2b25d3c55c0",
+    "net": {
+        "id": "31",
+        "name": "RSK Testnet"
+    },
+    "name": "SimpleStorage",
+    "settings": {
+        "optimizer": {
+            "enabled": false,
+            "runs": 200
+        }
+    },
+    "version": "0.6.12+commit.27d51765",
+    "source": "// SPDX-License-Identifier: GPL-3.0-or-later\r\npragma solidity >=0.4.0 <0.7.0;\r\n\r\ncontract SimpleStorage {\r\n    uint storedData;\r\n\r\n    function set(uint x) public {\r\n        storedData = x;\r\n    }\r\n\r\n    function get() public view returns (uint) {\r\n        return storedData;\r\n    }\r\n}",
+    "imports": [
+        {
+            "name": "SimpleStorage.sol",
+            "contents": "// SPDX-License-Identifier: GPL-3.0-or-later\r\npragma solidity >=0.4.0 <0.7.0;\r\n\r\ncontract SimpleStorage {\r\n    uint storedData;\r\n\r\n    function set(uint x) public {\r\n        storedData = x;\r\n    }\r\n\r\n    function get() public view returns (uint) {\r\n        return storedData;\r\n    }\r\n}",
+            "file": "SimpleStorage.sol"
+        }
+    ],
+    "libraries": {},
+    "creationData": {
+        "blockHash": "0x6233e45dd81e2b3f63d63c4c6060e0946a227892ea17e5d4e5549ff0e5d6aeae",
+        "blockNumber": 1793843,
+        "transactionHash": "0x03b2138719abec91aa5a62b6de62562373e79a9759db27073744c952eae3435a",
+        "timestamp": 1619387993
+    }
+}

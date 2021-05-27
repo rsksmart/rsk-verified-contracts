@@ -1,0 +1,30 @@
+{
+    "address": "0x1a96bf88667ae55cfe5cc7ec3ab94b8dff9ff978",
+    "net": {
+        "id": "31",
+        "name": "RSK Testnet"
+    },
+    "name": "SimpleStorage",
+    "settings": {
+        "optimizer": {
+            "enabled": false,
+            "runs": 200
+        }
+    },
+    "version": "0.8.1+commit.df193b15",
+    "source": "// SPDX-License-Identifier: GPL-3.0-or-later\r\npragma solidity >=0.7.0 <0.9.0;\r\n\r\ncontract SimpleStorage {\r\n    uint storedData;\r\n\r\n    function set(uint x) public {\r\n        storedData = x;\r\n    }\r\n\r\n    function get() public view returns (uint) {\r\n        return storedData;\r\n    }\r\n}\r\n",
+    "imports": [
+        {
+            "name": "deneme.sol",
+            "contents": "// SPDX-License-Identifier: GPL-3.0-or-later\r\npragma solidity >=0.7.0 <0.9.0;\r\n\r\ncontract SimpleStorage {\r\n    uint storedData;\r\n\r\n    function set(uint x) public {\r\n        storedData = x;\r\n    }\r\n\r\n    function get() public view returns (uint) {\r\n        return storedData;\r\n    }\r\n}\r\n",
+            "file": "deneme.sol"
+        }
+    ],
+    "libraries": {},
+    "creationData": {
+        "blockHash": "0xb88b9bd10182de53a64ab19b0c36b489adfaee575ff39e6e941b31e0eb0635fa",
+        "blockNumber": 1794152,
+        "transactionHash": "0x483d11732aa285cb9dffa1bc95f447f7028f3b5ca520e9f3893f8ce0691c4541",
+        "timestamp": 1619398218
+    }
+}

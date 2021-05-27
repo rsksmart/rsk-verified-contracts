@@ -1,0 +1,30 @@
+{
+    "address": "0x75412a4a5163c2366b9ca171112160253385747f",
+    "net": {
+        "id": "31",
+        "name": "RSK Testnet"
+    },
+    "name": "Storage",
+    "settings": {
+        "optimizer": {
+            "enabled": false,
+            "runs": 200
+        }
+    },
+    "version": "0.8.3+commit.8d00100c",
+    "source": "// SPDX-License-Identifier: GPL-3.0\r\n\r\npragma solidity >=0.7.0 <0.9.0;\r\n\r\n/**\r\n * @title Storage\r\n * @dev Store & retrieve value in a variable\r\n */\r\ncontract Storage {\r\n\r\n    uint256 number;\r\n    event ChangedValueLog(uint256 oldNum, uint256 newNum);\r\n    \r\n    /**\r\n     * @dev Store value in variable\r\n     * @param num value to store\r\n     */\r\n    function store(uint256 num) public {\r\n        require(num > 10, \"Se debe ingresar un numero mayor a cero\");\r\n        emit ChangedValueLog(number, num);\r\n        number = num;\r\n    }\r\n\r\n    /**\r\n     * @dev Return value \r\n     * @return value of 'number'\r\n     */\r\n    function retrieve() public view returns (uint256){\r\n        return number;\r\n    }\r\n}",
+    "imports": [
+        {
+            "name": "Storage.sol",
+            "contents": "// SPDX-License-Identifier: GPL-3.0\r\n\r\npragma solidity >=0.7.0 <0.9.0;\r\n\r\n/**\r\n * @title Storage\r\n * @dev Store & retrieve value in a variable\r\n */\r\ncontract Storage {\r\n\r\n    uint256 number;\r\n    event ChangedValueLog(uint256 oldNum, uint256 newNum);\r\n    \r\n    /**\r\n     * @dev Store value in variable\r\n     * @param num value to store\r\n     */\r\n    function store(uint256 num) public {\r\n        require(num > 10, \"Se debe ingresar un numero mayor a cero\");\r\n        emit ChangedValueLog(number, num);\r\n        number = num;\r\n    }\r\n\r\n    /**\r\n     * @dev Return value \r\n     * @return value of 'number'\r\n     */\r\n    function retrieve() public view returns (uint256){\r\n        return number;\r\n    }\r\n}",
+            "file": "Storage.sol"
+        }
+    ],
+    "libraries": {},
+    "creationData": {
+        "blockHash": "0x2285f84d49eabd37bb4c9dfbacbe50b996514ec8610f99bf6dfd220c47d273f6",
+        "blockNumber": 1822097,
+        "transactionHash": "0x3cc41699c0a08b74b51a2d669961cdb790451003d374dc5b32b1200052ca26e3",
+        "timestamp": 1620311766
+    }
+}

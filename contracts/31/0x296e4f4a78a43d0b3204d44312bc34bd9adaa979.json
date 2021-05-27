@@ -1,0 +1,30 @@
+{
+    "address": "0x296e4f4a78a43d0b3204d44312bc34bd9adaa979",
+    "net": {
+        "id": "31",
+        "name": "RSK Testnet"
+    },
+    "name": "Comen_Mustafa",
+    "settings": {
+        "optimizer": {
+            "enabled": false,
+            "runs": 200
+        }
+    },
+    "version": "0.8.1+commit.df193b15",
+    "source": "// SPDX-License-Identifier: MIT\r\npragma solidity >=0.7.0 <0.9.0;\r\n\r\ncontract Comen_Mustafa {\r\n    uint storedData;\r\n\r\n    function set(uint x) public {\r\n        storedData = x;\r\n    }\r\n\r\n    function get() public view returns (uint) {\r\n        return storedData;\r\n    }\r\n}",
+    "imports": [
+        {
+            "name": "Comen_Mustafa.sol",
+            "contents": "// SPDX-License-Identifier: MIT\r\npragma solidity >=0.7.0 <0.9.0;\r\n\r\ncontract Comen_Mustafa {\r\n    uint storedData;\r\n\r\n    function set(uint x) public {\r\n        storedData = x;\r\n    }\r\n\r\n    function get() public view returns (uint) {\r\n        return storedData;\r\n    }\r\n}",
+            "file": "Comen_Mustafa.sol"
+        }
+    ],
+    "libraries": {},
+    "creationData": {
+        "blockHash": "0xd4647b6e2b7281ba6b86e5c72d38b392c1eeac3e6e8f2ca439d23403e237d850",
+        "blockNumber": 1788433,
+        "transactionHash": "0x22798b84046e8625fffce35f718e81b985d6ba81e6ed316d4f28887936f59964",
+        "timestamp": 1619209128
+    }
+}

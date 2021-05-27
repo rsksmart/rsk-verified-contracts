@@ -1,0 +1,30 @@
+{
+    "address": "0x878374951ba3ea536331332d6f968efe15f740cc",
+    "net": {
+        "id": "31",
+        "name": "RSK Testnet"
+    },
+    "name": "odev",
+    "settings": {
+        "optimizer": {
+            "enabled": false,
+            "runs": 200
+        }
+    },
+    "version": "0.8.3+commit.8d00100c",
+    "source": "//SPDX-License-Identifier: 6PL-3.0\r\npragma solidity >=0.7.0 <0.9.0;\r\n\r\ncontract odev {\r\n    uint storedData;\r\n\r\n    function set(uint x) public {\r\n        storedData = x;\r\n    }\r\n\r\n    function get() public view returns (uint) {\r\n        return storedData;\r\n    }\r\n}",
+    "imports": [
+        {
+            "name": "odev.sol",
+            "contents": "//SPDX-License-Identifier: 6PL-3.0\r\npragma solidity >=0.7.0 <0.9.0;\r\n\r\ncontract odev {\r\n    uint storedData;\r\n\r\n    function set(uint x) public {\r\n        storedData = x;\r\n    }\r\n\r\n    function get() public view returns (uint) {\r\n        return storedData;\r\n    }\r\n}",
+            "file": "odev.sol"
+        }
+    ],
+    "libraries": {},
+    "creationData": {
+        "blockHash": "0x28a509159064ba08f137211e60b0502ebe0af474d1b35eec62fcfda39c114117",
+        "blockNumber": 1792906,
+        "transactionHash": "0x9bfb9e33bbdbaa5f4cd91d9cbfad638a0038238d183a8046cb17810f1380fd5a",
+        "timestamp": 1619356739
+    }
+}

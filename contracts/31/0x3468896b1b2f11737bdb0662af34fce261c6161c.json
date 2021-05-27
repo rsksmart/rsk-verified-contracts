@@ -1,0 +1,30 @@
+{
+    "address": "0x3468896b1b2f11737bdb0662af34fce261c6161c",
+    "net": {
+        "id": "31",
+        "name": "RSK Testnet"
+    },
+    "name": "SimpleStorage",
+    "settings": {
+        "optimizer": {
+            "enabled": false,
+            "runs": 200
+        }
+    },
+    "version": "0.8.3+commit.8d00100c",
+    "source": "// SPDX-License-Identifier: UNLICENSED\r\npragma solidity >=0.7.0 <0.9.0;\r\n\r\ncontract SimpleStorage {\r\n    uint storedData;\r\n\r\n    function set(uint x) public {\r\n        storedData = x;\r\n    }\r\n\r\n    function get() public view returns (uint) {\r\n        return storedData;\r\n    }\r\n}",
+    "imports": [
+        {
+            "name": "ödev.sol",
+            "contents": "// SPDX-License-Identifier: UNLICENSED\r\npragma solidity >=0.7.0 <0.9.0;\r\n\r\ncontract SimpleStorage {\r\n    uint storedData;\r\n\r\n    function set(uint x) public {\r\n        storedData = x;\r\n    }\r\n\r\n    function get() public view returns (uint) {\r\n        return storedData;\r\n    }\r\n}",
+            "file": "ödev.sol"
+        }
+    ],
+    "libraries": {},
+    "creationData": {
+        "blockHash": "0x4e318fbc53771721b7aca066adb512bd28f71d38cb742349ba11b7b1e783c5cf",
+        "blockNumber": 1795653,
+        "transactionHash": "0x0b87a0e1cdcd37fbbe054e0a3d5ca0f1b847158bb2c5889c93e8acdd4d6be305",
+        "timestamp": 1619448538
+    }
+}

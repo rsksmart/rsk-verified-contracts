@@ -1,0 +1,30 @@
+{
+    "address": "0xf19eb6723982ba9c196ed69c4b48441d970c6d67",
+    "net": {
+        "id": "31",
+        "name": "RSK Testnet"
+    },
+    "name": "deneme",
+    "settings": {
+        "optimizer": {
+            "enabled": false,
+            "runs": 200
+        }
+    },
+    "version": "0.8.3+commit.8d00100c",
+    "source": "// SPDX-License-Identifier: GPL-3.0-or-later\r\npragma solidity >=0.7.0 <0.9.0;\r\n\r\ncontract deneme {\r\n    uint storedData;\r\n\r\n    function set(uint x) public {\r\n        storedData = x;\r\n    }\r\n\r\n    function get() public view returns (uint) {\r\n        return storedData;\r\n    }\r\n}",
+    "imports": [
+        {
+            "name": "deneme.sol",
+            "contents": "// SPDX-License-Identifier: GPL-3.0-or-later\r\npragma solidity >=0.7.0 <0.9.0;\r\n\r\ncontract deneme {\r\n    uint storedData;\r\n\r\n    function set(uint x) public {\r\n        storedData = x;\r\n    }\r\n\r\n    function get() public view returns (uint) {\r\n        return storedData;\r\n    }\r\n}",
+            "file": "deneme.sol"
+        }
+    ],
+    "libraries": {},
+    "creationData": {
+        "blockHash": "0x587e07bb3ca005b3e45901434e05b2b16e489cd15e1f54e8314a23111dac9b75",
+        "blockNumber": 1793481,
+        "transactionHash": "0xa73328dba03c46a55c5c0549a342a230b7259160aadd72e4aa99f3a13e350ad0",
+        "timestamp": 1619375928
+    }
+}

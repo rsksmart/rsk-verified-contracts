@@ -1,0 +1,33 @@
+{
+    "address": "0xc37e3d70b5d7be9c862ce09306d6a5cb4c2c7df7",
+    "net": {
+        "id": "31",
+        "name": "RSK Testnet"
+    },
+    "name": "testContract",
+    "settings": {
+        "optimizer": {
+            "enabled": false,
+            "runs": 200
+        }
+    },
+    "version": "0.5.1+commit.c8a2cb62",
+    "source": "pragma solidity ^0.5.1;\n\ncontract testContract {\n\n    uint value;\n\n    constructor (uint _p) public {\n        value = _p;\n    }\n\n    function setP(uint _n) payable public {\n        value = _n;\n    }\n\n    function setNP(uint _n) public {\n        value = _n;\n    }\n\n    function get () view public returns (uint) {\n        return value;\n    }\n}",
+    "imports": [
+        {
+            "name": "testNet.sol",
+            "contents": "pragma solidity ^0.5.1;\n\ncontract testContract {\n\n    uint value;\n\n    constructor (uint _p) public {\n        value = _p;\n    }\n\n    function setP(uint _n) payable public {\n        value = _n;\n    }\n\n    function setNP(uint _n) public {\n        value = _n;\n    }\n\n    function get () view public returns (uint) {\n        return value;\n    }\n}",
+            "file": "testNet.sol"
+        }
+    ],
+    "libraries": {},
+    "constructorArguments": [
+        "1"
+    ],
+    "creationData": {
+        "blockHash": "0x4dd5b8d828d21b06974d02d366c177cf91338c6175ae24544f916e52040b038d",
+        "blockNumber": 1850921,
+        "transactionHash": "0x339bbded64d235d03bc27ccd151d39410e1042a73d9fd43a1f3a0e1e34d85adf",
+        "timestamp": 1621256930
+    }
+}

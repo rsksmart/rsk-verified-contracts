@@ -1,0 +1,30 @@
+{
+    "address": "0x35adb161410c75a3c6d7a24d0e986045d6282369",
+    "net": {
+        "id": "31",
+        "name": "RSK Testnet"
+    },
+    "name": "SimpleStorage",
+    "settings": {
+        "optimizer": {
+            "enabled": false,
+            "runs": 200
+        }
+    },
+    "version": "0.8.3+commit.8d00100c",
+    "source": "// SPDX-License-Identifier: GPL-3.0\r\n\r\npragma solidity >=0.7.0 <0.9.0;\r\n\r\n/**\r\n * @title SimpleStorage\r\n * @dev Store & retrieve value in a variable\r\n */\r\n\r\n\r\ncontract SimpleStorage {\r\n    uint storedData;\r\n\r\n    function set(uint x) public {\r\n        storedData = x;\r\n    }\r\n\r\n    function get() public view returns (uint) {\r\n        return storedData;\r\n    }\r\n}",
+    "imports": [
+        {
+            "name": "SimpleStorage.sol",
+            "contents": "// SPDX-License-Identifier: GPL-3.0\r\n\r\npragma solidity >=0.7.0 <0.9.0;\r\n\r\n/**\r\n * @title SimpleStorage\r\n * @dev Store & retrieve value in a variable\r\n */\r\n\r\n\r\ncontract SimpleStorage {\r\n    uint storedData;\r\n\r\n    function set(uint x) public {\r\n        storedData = x;\r\n    }\r\n\r\n    function get() public view returns (uint) {\r\n        return storedData;\r\n    }\r\n}",
+            "file": "SimpleStorage.sol"
+        }
+    ],
+    "libraries": {},
+    "creationData": {
+        "blockHash": "0x7cdbb753eb14ccb455f75a74ed7947ec1bb3f227e43d9232828e034c7f1fdaae",
+        "blockNumber": 1790871,
+        "transactionHash": "0x57d9044c9b845eb5f14a79a5c258514306ccb110b1b7f437391cd918d1a1b8ed",
+        "timestamp": 1619288300
+    }
+}
